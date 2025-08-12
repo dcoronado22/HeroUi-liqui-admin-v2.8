@@ -1,0 +1,384 @@
+"use client";
+import React, { useMemo, useCallback, useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Input,
+  Button,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Chip,
+  User,
+  Pagination,
+  Selection,
+  SortDescriptor,
+  ChipProps,
+  Tooltip,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  RadioGroup,
+  Radio,
+  Select,
+  SelectItem,
+} from "@heroui/react";
+import { Icon } from "@iconify/react";
+import { SearchIcon } from "@heroui/shared-icons";
+
+// Define types for our dynamic table props and data
+type CellRenderFunction = (item: any, columnKey: string) => React.ReactNode;
+
+interface ColumnDefinition {
+  key: string;
+  label: string;
+  allowsSorting?: boolean;
+  cellRenderer?: CellRenderFunction;
+}
+
+interface DynamicTableProps {
+  data: any[];
+  columns: ColumnDefinition[];
+  allowFiltering?: boolean;
+  allowSorting?: boolean;
+  allowColumnVisibility?: boolean;
+  allowRowSelection?: boolean;
+  initialVisibleColumns?: string[];
+  excludeFromSorting?: string[];
+  filterableColumns?: string[];
+  itemsPerPage?: number;
+  maxHeight?: string;
+  minHeight?: string;
+}
+
+export const DynamicTable: React.FC<DynamicTableProps> = ({
+  data,
+  columns,
+  allowFiltering = true,
+  allowSorting = true,
+  allowColumnVisibility = true,
+  allowRowSelection = true,
+  initialVisibleColumns,
+  excludeFromSorting = [],
+  filterableColumns = [],
+  itemsPerPage = 10,
+  maxHeight = "65vh",
+  minHeight = "65vh",
+}) => {
+  const [filterValue, setFilterValue] = useState("");
+  const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(initialVisibleColumns));
+  const [rowsPerPage, setRowsPerPage] = useState(itemsPerPage);
+  const [page, setPage] = useState(1);
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({ column: "", direction: "ascending" });
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]));
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [roleFilter, setRoleFilter] = useState("all");
+
+  const hasSearchFilter = Boolean(filterValue);
+
+  const headerColumns = useMemo(() => {
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.key)
+    );
+  }, [columns, visibleColumns]);
+
+  const filteredItems = useMemo(() => {
+    let filteredData = [...data];
+
+    if (hasSearchFilter) {
+      filteredData = filteredData.filter((item) =>
+        filterableColumns.some(
+          (columnKey) =>
+            item[columnKey] &&
+            item[columnKey].toString().toLowerCase().includes(filterValue.toLowerCase())
+        )
+      );
+    }
+
+    if (statusFilter !== "all") {
+      filteredData = filteredData.filter((item) => item.status === statusFilter);
+    }
+
+    if (roleFilter !== "all") {
+      filteredData = filteredData.filter((item) => item.role === roleFilter);
+    }
+
+    return filteredData;
+  }, [data, filterValue, hasSearchFilter, filterableColumns, statusFilter, roleFilter]);
+
+  const pages = Math.ceil(filteredItems.length / rowsPerPage);
+
+  const items = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return filteredItems.slice(start, end);
+  }, [page, filteredItems, rowsPerPage]);
+
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a: any, b: any) => {
+      const first = a[sortDescriptor.column];
+      const second = b[sortDescriptor.column];
+      const cmp = first < second ? -1 : first > second ? 1 : 0;
+
+      return sortDescriptor.direction === "descending" ? -cmp : cmp;
+    });
+  }, [sortDescriptor, items]);
+
+  const renderCell = useCallback((item: any, columnKey: string) => {
+    const column = columns.find((c) => c.key === columnKey);
+    if (column && column.cellRenderer) {
+      return column.cellRenderer(item, columnKey);
+    }
+    return item[columnKey];
+  }, [columns]);
+
+  const onNextPage = useCallback(() => {
+    if (page < pages) {
+      setPage(page + 1);
+    }
+  }, [page, pages]);
+
+  const onPreviousPage = useCallback(() => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  }, [page]);
+
+  const onSearchChange = useCallback((value?: string) => {
+    if (value) {
+      setFilterValue(value);
+      setPage(1);
+    } else {
+      setFilterValue("");
+    }
+  }, []);
+
+  const topContent = useMemo(() => {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between gap-4 w-full">
+          {/* Izquierda: Filtros, columnas, orden y seleccionados */}
+          <div className="flex items-center gap-3">
+            {allowFiltering && (
+              <Input
+                isClearable
+                variant="bordered"
+                className="w-full sm:max-w-[40%]"
+                placeholder="Buscar por..."
+                startContent={<SearchIcon />}
+                value={filterValue}
+                onClear={() => onSearchChange("")}
+                onValueChange={onSearchChange}
+              />
+            )}
+            {allowColumnVisibility && (
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button endContent={<Icon icon="lucide:chevron-down" />} variant="flat">
+                    Columnas
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  disallowEmptySelection
+                  aria-label="Columnas de la tabla"
+                  closeOnSelect={false}
+                  selectedKeys={visibleColumns}
+                  selectionMode="multiple"
+                  onSelectionChange={setVisibleColumns}
+                >
+                  {columns.map((column) => (
+                    <DropdownItem key={column.key} className="capitalize">
+                      {column.label}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+            )}
+            {allowFiltering && (
+              <Popover placement="bottom-end">
+                <PopoverTrigger>
+                  <Button endContent={<Icon icon="lucide:filter" />} variant="flat">
+                    Filtro
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80">
+                  <div className="p-4">
+                    <RadioGroup label="Estatus" value={statusFilter} onValueChange={setStatusFilter}>
+                      <Radio value="all">Todos</Radio>
+                      <Radio value="active">Activo</Radio>
+                      <Radio value="paused">Pausado</Radio>
+                    </RadioGroup>
+                    <RadioGroup label="Rol" value={roleFilter} onValueChange={setRoleFilter}>
+                      <Radio value="all">Todos</Radio>
+                      <Radio value="CEO">CEO</Radio>
+                      <Radio value="Tech Lead">Tech Lead</Radio>
+                    </RadioGroup>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
+            {allowSorting && (
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button endContent={<Icon icon="lucide:arrow-up-down" />} variant="flat">
+                    Ordenar
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  aria-label="Opciones de orden"
+                  onAction={(key) => setSortDescriptor({ column: key as string, direction: "ascending" })}
+                >
+                  {columns.filter(col => col.allowsSorting).map((column) => (
+                    <DropdownItem key={column.key} className="capitalize">
+                      {column.label}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+            )}
+            {allowRowSelection && (
+              <div className="flex items-center h-full">
+                <label color="primary" className="flex items-center h-full text-default-400 text-small">
+                  | {selectedKeys === "all"
+                    ? `Todos ${filteredItems.length} Seleccionados`
+                    : `${selectedKeys.size} Seleccionados`}
+                </label>
+              </div>
+            )}
+            {/* Derecha: Filas por página */}
+          </div>
+          <div className="flex items-center">
+            <Select
+              labelPlacement="outside-left"
+              label="Filas por página"
+              variant="faded"
+              className="min-w-50"
+              defaultSelectedKeys={[rowsPerPage.toString()]}
+              onChange={(e) => setRowsPerPage(Number(e.target.value))}
+            >
+              <SelectItem key="5">5</SelectItem>
+              <SelectItem key="10">10</SelectItem>
+              <SelectItem key="15">15</SelectItem>
+            </Select>
+          </div>
+        </div>
+      </div>
+    );
+  }, [
+    filterValue,
+    visibleColumns,
+    onSearchChange,
+    columns,
+    allowFiltering,
+    allowColumnVisibility,
+    statusFilter,
+    roleFilter,
+    allowSorting,
+    selectedKeys,
+    filteredItems.length,
+  ]);
+
+  const bottomContent = useMemo(() => {
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        {/* <span className="w-[30%] text-small text-default-400">
+        </span> */}
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={page}
+          total={pages}
+          onChange={setPage}
+        />
+        <div className="hidden sm:flex w-[30%] justify-end gap-2">
+          <Button isDisabled={pages === 1} size="sm" variant="shadow" color="default" onPress={onPreviousPage}>
+            Anterior
+          </Button>
+          <Button isDisabled={pages === 1} size="sm" variant="shadow" color="primary" onPress={onNextPage}>
+            Siguiente
+          </Button>
+        </div>
+      </div>
+    );
+  }, [selectedKeys, filteredItems.length, page, pages, onPreviousPage, onNextPage]);
+
+  return (
+    <Table
+      aria-label="Dynamic Table"
+      isHeaderSticky
+      bottomContent={bottomContent}
+      bottomContentPlacement="outside"
+      classNames={{
+        wrapper: `min-h-[10vh] max-h-[66vh]`,
+        // wrapper: `min-h-[${minHeight}] max-h-[${maxHeight}]`,
+        th: "py-4",
+        td: "py-4",
+        tr: "h-14",
+
+      }}
+      selectedKeys={selectedKeys}
+      selectionMode={allowRowSelection ? "multiple" : "none"}
+      sortDescriptor={sortDescriptor}
+      topContent={topContent}
+      topContentPlacement="outside"
+      onSelectionChange={setSelectedKeys}
+      onSortChange={setSortDescriptor}
+    >
+      <TableHeader columns={headerColumns}>
+        {(column) => (
+          <TableColumn
+            key={column.key}
+            align={column.key === "actions" ? "center" : "start"}
+            allowsSorting={allowSorting && column.allowsSorting && !excludeFromSorting.includes(column.key)}
+          >
+            {column.label}
+          </TableColumn>
+        )}
+      </TableHeader>
+      <TableBody items={sortedItems} emptyContent={"No hay datos para mostrar."}>
+        {(item) => (
+          <TableRow key={item.id}>
+            {(columnKey) => <TableCell>{renderCell(item, columnKey.toString())}</TableCell>}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table >
+  );
+};
+
+// Utility functions for common cell renderers
+export const renderChip = (value: string, color?: ChipProps["color"]) => (
+  <Chip color={color} size="sm" variant="flat">
+    {value}
+  </Chip>
+);
+
+export const renderUser = (user: { name: string; email: string; avatar: string }) => (
+  <User
+    avatarProps={{ radius: "lg", src: user.avatar }}
+    description={user.email}
+    name={user.name}
+  >
+    {user.email}
+  </User>
+);
+
+export const renderActions = (actions: { icon: string; tooltip: string; onClick: () => void }[]) => (
+  <div className="relative flex items-center gap-2">
+    {actions.map((action, index) => (
+      <Tooltip key={index} content={action.tooltip}>
+        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+          <Icon icon={action.icon} onClick={action.onClick} />
+        </span>
+      </Tooltip>
+    ))}
+  </div>
+);

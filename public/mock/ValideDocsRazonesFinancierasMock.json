@@ -1,0 +1,12 @@
+{
+    "hasRecentDocuments": true,
+    "hasHistoricalDocuments": true,
+    "id": null,
+    "token": null,
+    "succeeded": true,
+    "reasonCode": {
+        "value": 1,
+        "description": "Operación exitosa"
+    },
+    "messages": []
+}

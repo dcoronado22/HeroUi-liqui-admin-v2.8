@@ -1,0 +1,65 @@
+{
+    "payload": {
+        "document_list": [
+            {
+                "name": "Estado de cuenta bancario",
+                "document_id": 75056,
+                "status": "valid",
+                "comments": "",
+                "valid_until": null,
+                "url_pre": null,
+                "files": [
+                    {
+                        "filename": "pdf.pdf",
+                        "file_id": 3039543
+                    }
+                ]
+            },
+            {
+                "name": "Prevención lavado de dinero",
+                "document_id": 75055,
+                "status": "valid",
+                "comments": "",
+                "valid_until": null,
+                "url_pre": null,
+                "files": [
+                    {
+                        "filename": "pdf.pdf",
+                        "file_id": 3039535
+                    }
+                ]
+            },
+            {
+                "name": "Formato firmado por el representante legal de la empresa para solicitud de Buró de Crédito.",
+                "document_id": 71905,
+                "status": "valid",
+                "comments": "",
+                "valid_until": null,
+                "url_pre": "https://s3.amazonaws.com/liquicapital-dev.liquicapital.com/vinculaciones///AutorizacionBuro.xlsx?AWSAccessKeyId=ASIA3MERCHG45OMH6EI3&Expires=1754943016&x-amz-security-token=IQoJb3JpZ2luX2VjELz%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIAnO2A59WBAMFDxxH%2BWV1paSH0Qo7%2BOZI9XiR2u19MXmAiEArmJx9RtsZcOmdu3UOC%2BkKQo7AFspC5GWr4WSydVPBggq2gMI9P%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw3ODE5ODgyODA3NjEiDFo%2BSuGiacLnL%2FrAVyquA%2BuA%2FeLCGV4STcfviUag6SjzOk2CWlEacXTIHNVd%2BwHacETezHRzasAqulCWKHTKGlQt6EioI1IzA1Z0KuAyXU4S4iQJmFjh%2FauXa2F5jIhUyLR851sxUMmQiBSqTZlz%2BqFJ172X%2FZPl0u9XEXy2xEVwGv3%2BP4e5jDMxAB3LPgPozJQ9O4i4VeltujrcpZGfu5alUn92c7iOMiRmTkgRQd98RaPt3bKv%2FOR%2BlnWlECK%2FyWU59mLZTSavGE%2BvsaJDFrJTpjk%2BJb6MmOnfKA80nWwsuMmCZXFQ9IKY%2BsSwbCVC%2Both1YSbWsxZIGM6y%2BmbUMymlAC0rSOqTLEsswhaDd0oEX2l7QZsOesqnSHaeThkUTFfp0OhGfMBUbknDXjecUF%2BeNcZHNZxtGn7fc9v%2B3W%2BvqRtN4OFj1C10Be0R4Qm6sE8fjS%2B9vo4YjtSKAsxKqmIgB%2F0CZRHRxwk7rjw1GGGd%2B35baU8WMaqOCtJwwOzV9zIIwyqcoPkmk2TbNT7%2B4ff%2FxWqb9BUY72%2BJCSxiuGPiebCS3f%2B5EQiP4%2F9hSZlAMqOuAVxdf7XvX2KJj4wj4DpxAY6ngFhRe1ZHP2Y9RfkrF5GKTatXGenMj0fiO3Z5Fw%2Ba9XPLyj%2FCTR4mCmmjcKav010AmoV6mwaz3yPJ65jHqEZdqJO5mdekhH6gN0Ggb9d8%2FV7bGIuV21yQ2HJfoaBTURi86ZP7jIAl2cqw9OHDRaZS2f%2BDi5LsaF0uaGNExcYbzLQLwi6WnKWgMaadRU9HEdQ0akH%2BuIXjFDAnyigbA%2B96Q%3D%3D&Signature=gsgTW421YDbaAtiopHgrJKBVs1I%3D",
+                "files": [
+                    {
+                        "filename": "pdf.pdf",
+                        "file_id": 3039544
+                    }
+                ]
+            }
+        ],
+        "messages": null,
+        "reasonCode": 0,
+        "succeeded": true,
+        "messages_validation": null
+    },
+    "documentsIsValid": true,
+    "escrituraDataValida": false,
+    "apoderadoLegalDataValida": false,
+    "desembolsoDataValida": false,
+    "camposInvalidos": [],
+    "id": null,
+    "token": null,
+    "succeeded": true,
+    "reasonCode": {
+        "value": 1,
+        "description": "Operación exitosa"
+    },
+    "messages": []
+}
