@@ -7,7 +7,8 @@ import GraphDual, { GraphDualProps } from "@/components/Graphs/DualGraph";
 import HeatmapHero, { HeatmapDatum } from "@/components/Graphs/HeatMap";
 import KPIStatBarCard, { KPIStatItem } from "@/components/KPIs/KPIStatBarCard";
 import KPIStatCard from "@/components/KPIs/KPIStatCard";
-import { Card, Tab, tabs, Tabs } from "@heroui/react";
+import { DashboardPayload, RawDashboardResponse, buildBarOperValorPorDia, buildDivergingOperTendencia, buildDonutOperEstados, buildDonutVincEstados, buildGraphDualProps, getDashboardAnalitico, heatmapSample } from "@/lib/api/getDashboardAnalitico";
+import { Card, Skeleton, Tab, tabs, Tabs } from "@heroui/react";
 // import { Card } from "@heroui/react";
 import React from "react";
 
@@ -157,10 +158,55 @@ const items: DonutCardItem[] = [
 ];
 
 export default function HomePage() {
+  const [data, setData] = React.useState<RawDashboardResponse | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const ac = new AbortController();
+
+    // Rango por defecto: últimos 12 meses en -05:00
+    const now = new Date();
+    const end = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(
+      now.getDate()
+    ).padStart(2, "0")}T23:59:59-05:00`;
+    const startDate = new Date(now);
+    startDate.setFullYear(now.getFullYear() - 1);
+    const start = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, "0")}-${String(
+      startDate.getDate()
+    ).padStart(2, "0")}T00:00:00-05:00`;
+
+    const payload: DashboardPayload = { FechaInicio: start, FechaFin: end };
+
+    (async () => {
+      try {
+        setLoading(true);
+        const resp = await getDashboardAnalitico(payload, { signal: ac.signal });
+        setData(resp);
+      } catch (e: any) {
+        setError(e?.message ?? "Error cargando dashboard");
+      } finally {
+        setLoading(false);
+      }
+    })();
+
+    return () => ac.abort();
+  }, []);
+
+  // Props para componentes (solo cuando haya data)
+  const graphDualProps: GraphDualProps | null = data ? buildGraphDualProps(data) : null;
+  const donutVinc: DonutCardItem[] = data ? buildDonutVincEstados(data) : [];
+  const donutOper: DonutCardItem[] = data ? buildDonutOperEstados(data) : [];
+  const diverging: DivergingBarCardItem[] = data ? buildDivergingOperTendencia(data) : [];
+  const barOper: BarCardItem[] = data ? buildBarOperValorPorDia(data) : [];
+  // Heatmap de ejemplo (sample). Si prefieres el real, descomenta la línea de abajo.
+  // const { data: heatData, xDomain, yDomain } = data ? mapHeatmapVinculaciones(data) : { data: [], xDomain: [], yDomain: [] };
+  // Por ahora, heatmapSample está indefinido o mal declarado, así que lo eliminamos.
+
   return (
     <>
-      {/* KPIs en 3 columnas */}
-      <div className="grid w-full  grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+      {/* KPIs en 3 columnas (sin tocar) */}
+      <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {cardsKPI.map((c, i) => (
           <KPIStatCard
             key={i}
@@ -185,74 +231,39 @@ export default function HomePage() {
             ]}
           />
         ))}
-
         <KPIStatBarCard singleMode items={itemsCard} />
       </div>
 
       <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3 md:auto-rows-[minmax(0,1fr)] md:min-h-[720px]">
+        {/* IZQ: GraphDual grande */}
         <div className="md:col-span-2 md:row-span-2 h-full">
           <div className="h-full">
-            <GraphDual
-              items={[
-                {
-                  key: "unique-visitors",
-                  title: "Unique Visitors",
-                  suffix: "visitors",
-                  value: 147000,
-                  type: "number",
-                  change: "12.8%",
-                  changeType: "positive",
-                  chartData: [
-                    { month: "Jan", value: 98000, lastYearValue: 43500 },
-                    { month: "Feb", value: 125000, lastYearValue: 38500 },
-                    { month: "Mar", value: 89000, lastYearValue: 58300 },
-                    { month: "Apr", value: 156000, lastYearValue: 35300 },
-                    { month: "May", value: 112000, lastYearValue: 89600 },
-                    { month: "Jun", value: 167000, lastYearValue: 56400 },
-                    { month: "Jul", value: 138000, lastYearValue: 45200 },
-                    { month: "Aug", value: 178000, lastYearValue: 84600 },
-                    { month: "Sep", value: 129000, lastYearValue: 73500 },
-                    { month: "Oct", value: 159000, lastYearValue: 65900 },
-                    { month: "Nov", value: 147000, lastYearValue: 82300 },
-                    { month: "Dec", value: 127000, lastYearValue: 95000 },
-                  ],
-                },
-                {
-                  key: "unique-visitors-2",
-                  title: "Unique Visitors",
-                  suffix: "visitors",
-                  value: 147000,
-                  type: "number",
-                  change: "12.8%",
-                  changeType: "positive",
-                  chartData: [
-                    { month: "Jan", value: 98000, lastYearValue: 43500 },
-                    { month: "Feb", value: 125000, lastYearValue: 38500 },
-                    { month: "Mar", value: 89000, lastYearValue: 58300 },
-                    { month: "Apr", value: 156000, lastYearValue: 35300 },
-                    { month: "May", value: 112000, lastYearValue: 89600 },
-                    { month: "Jun", value: 167000, lastYearValue: 56400 },
-                    { month: "Jul", value: 138000, lastYearValue: 45200 },
-                    { month: "Aug", value: 178000, lastYearValue: 84600 },
-                    { month: "Sep", value: 129000, lastYearValue: 73500 },
-                    { month: "Oct", value: 159000, lastYearValue: 65900 },
-                    { month: "Nov", value: 147000, lastYearValue: 82300 },
-                    { month: "Dec", value: 127000, lastYearValue: 95000 },
-                  ],
-                },
-              ]}
-              colors={{ positive: "success", negative: "danger", neutral: "default", comparison: "default-400" }}
-              showComparison
-            />
+            {graphDualProps ? (
+              <GraphDual {...graphDualProps} loading={loading} />
+            ) : (
+              <Card className="h-full p-6">
+                <Skeleton className="h-8 w-64 rounded mb-4" />
+                <Skeleton className="h-8 w-full rounded mb-2" />
+                <Skeleton className="h-[300px] w-full rounded" />
+              </Card>
+            )}
           </div>
         </div>
+
+        {/* DER: superior -> Donut de VINC (distribuciónEstados) */}
         <div className="md:col-span-1 md:row-span-2 grid grid-rows-2 gap-5 h-full">
           <div className="h-full">
-            <DonutGraph items={items} singleMode={true} gridClassName="grid w-full grid-cols-1" />
+            {donutVinc.length ? (
+              <DonutGraph items={donutVinc} singleMode gridClassName="grid w-full grid-cols-1" />
+            ) : (
+              <Card className="h-full p-6"><Skeleton className="h-full w-full rounded" /></Card>
+            )}
           </div>
+
+          {/* DER: inferior -> Heatmap (lo dejas como lo tenías) */}
           <div className="h-full">
             <HeatmapHero
-              data={sampleData}
+              data={heatmapSample}
               xDomain={xDom as any}
               yDomain={yDom as any}
               a11yTitle="Tiempos por Transición (Horas)"
@@ -266,38 +277,37 @@ export default function HomePage() {
               legend={{ show: true, position: "bottom" }}
               onCellClick={(d) => console.log("cell:", d)}
             />
-            {/* <DonutGraph items={items} singleMode={true} gridClassName="grid w-full grid-cols-1" /> */}
           </div>
         </div>
+
+        {/* COL 3: arriba -> BarDiverging (operaciones.tendencia: montoTotal vs totalFacturas) */}
         <div className="md:col-span-1 md:row-span-2 grid grid-rows-2 gap-5 h-full">
           <div className="h-full">
-            {/* <DonutGraph items={items} singleMode={true} gridClassName="grid w-full grid-cols-1" donutHeight="100%" /> */}
-            <BarDivergingGraph singleMode={true} items={itemsBarDiverging} />
+            {diverging.length ? (
+              <BarDivergingGraph singleMode items={diverging} />
+            ) : (
+              <Card className="h-full p-6"><Skeleton className="h-full w-full rounded" /></Card>
+            )}
           </div>
+
+          {/* COL 3: abajo -> REEMPLAZA BarsLateralGraph por Donut de operaciones.distribucionEstados */}
           <div className="h-full">
-            <BarsLateralGraph singleMode={true} items={itemsBarLateral} />
-            {/* <BarGraph items={itemsBar} singleMode={true} gridClassName="grid w-full grid-cols-1" /> */}
-            {/* <HeatmapHero
-              data={sampleData}
-              xDomain={xDom as any}
-              yDomain={yDom as any}
-              a11yTitle="Tiempos por Transición (Horas)"
-              tooltip={(d) => (
-                <div className="text-tiny">
-                  <b>{String(d.x)}</b> / <b>{String(d.y)}</b>
-                  <div className="text-default-500">Valor: {d.value}</div>
-                </div>
-              )}
-              valueFormatter={(v) => `${v} h`}
-              legend={{ show: true, position: "bottom" }}
-              onCellClick={(d) => console.log("cell:", d)}
-            // width y height omitidos -> usa ResizeObserver para ocupar el contenedor (100% x 380px)
-            /> */}
+            {donutOper.length ? (
+              <DonutGraph items={donutOper} singleMode gridClassName="grid w-full grid-cols-1" />
+            ) : (
+              <Card className="h-full p-6"><Skeleton className="h-full w-full rounded" /></Card>
+            )}
           </div>
         </div>
+
+        {/* ABAJO ANCHO: BarGraph => operaciones.valorPorDia */}
         <div className="md:col-span-2 md:row-span-2 h-full">
           <div className="h-full">
-            <BarGraph items={itemsBar} singleMode={true} gridClassName="grid w-full grid-cols-1" />
+            {barOper.length ? (
+              <BarGraph items={barOper} singleMode gridClassName="grid w-full grid-cols-1" />
+            ) : (
+              <Card className="h-full p-6"><Skeleton className="h-[320px] w-full rounded" /></Card>
+            )}
           </div>
         </div>
       </div>

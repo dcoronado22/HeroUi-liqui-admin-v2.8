@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import NotificationMenu from "@/components/NotificationMenu/notificationMenu";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { SearchIcon } from "../icons";
+import { useMsal } from "@azure/msal-react";
 
 type Props = {
     isCollapsed: boolean;
@@ -24,7 +25,8 @@ export default function HeaderBar({
     onToggleSearch,
 }: Props) {
     const pathname = usePathname();
-
+    const { instance, accounts, inProgress } = useMsal();
+    const account = instance.getActiveAccount() || accounts[0];
     // opcional: breadcrumbs dinámicos simples
     const segments = pathname.split("/").filter(Boolean);
     const crumbs = [{ label: "Home", href: "/" }, ...segments.map((seg, i) => {
@@ -102,10 +104,8 @@ export default function HeaderBar({
                         <DropdownMenu aria-label="User Actions" variant="flat">
                             <DropdownItem key="profile" className="h-14 gap-2">
                                 <p className="font-bold">Signed in as</p>
-                                <p className="font-bold">@tonyreichert</p>
+                                <p className="font-light">{account.name}</p>
                             </DropdownItem>
-                            <DropdownItem key="settings">My Settings</DropdownItem>
-                            <DropdownItem key="team_settings">Team Settings</DropdownItem>
                             <DropdownItem key="logout" color="danger" endContent={<Icon icon="line-md:log-in" fontSize={18} />}>
                                 Log Out
                             </DropdownItem>

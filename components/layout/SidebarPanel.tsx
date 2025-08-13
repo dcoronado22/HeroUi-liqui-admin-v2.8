@@ -44,7 +44,7 @@ export default function SidebarPanel({ isCollapsed }: Props) {
             {/* Brand */}
             <div className="flex items-center gap-2 px-2">
                 <div className="bg-foreground-50 flex h-12 w-12 items-center justify-center rounded-full">
-                    <Image src={Logo} alt="LiquiCapital" width={50} height={50} className="rounded-sm" />
+                    <Image src={Logo} alt="LiquiCapital" width={50} height={50} className={`rounded-sm ${isCollapsed ? "mr-2" : "pr-0"}`} />
                 </div>
                 {!isCollapsed && <span className="text-large text-foreground font-bold ">LiquiCapital</span>}
             </div>

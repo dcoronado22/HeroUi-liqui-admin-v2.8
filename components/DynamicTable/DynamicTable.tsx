@@ -27,6 +27,8 @@ import {
   Radio,
   Select,
   SelectItem,
+  spinner,
+  Spinner
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { SearchIcon } from "@heroui/shared-icons";
@@ -54,6 +56,8 @@ interface DynamicTableProps {
   itemsPerPage?: number;
   maxHeight?: string;
   minHeight?: string;
+  isLoading?: boolean;
+  loadingLabel?: string;
 }
 
 export const DynamicTable: React.FC<DynamicTableProps> = ({
@@ -69,6 +73,8 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   itemsPerPage = 10,
   maxHeight = "65vh",
   minHeight = "65vh",
+  isLoading = false,
+  loadingLabel = "Cargando..."
 }) => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(initialVisibleColumns));
@@ -130,13 +136,32 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = useCallback((item: any, columnKey: string) => {
-    const column = columns.find((c) => c.key === columnKey);
-    if (column && column.cellRenderer) {
-      return column.cellRenderer(item, columnKey);
-    }
-    return item[columnKey];
-  }, [columns]);
+
+  const renderCell = useCallback(
+    (item: any, columnKey: string) => {
+      const column = columns.find((c) => c.key === columnKey);
+
+      if (column?.cellRenderer) {
+        // cellRenderer puede ignorar el segundo argumento sin problema
+        return column.cellRenderer(item, columnKey);
+      }
+
+      // Fallback robusto
+      const v = item?.[columnKey as keyof typeof item];
+
+      if (v === null || v === undefined || v === "") {
+        return <span className="text-default-400">—</span>;
+      }
+
+      // Formatea números para que no se vean "vacíos"
+      if (typeof v === "number") {
+        return <span>{v.toLocaleString()}</span>;
+      }
+
+      return <span>{String(v)}</span>;
+    },
+    [columns]
+  );
 
   const onNextPage = useCallback(() => {
     if (page < pages) {
@@ -343,7 +368,16 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={sortedItems} emptyContent={"No hay datos para mostrar."}>
+      <TableBody
+        isLoading={isLoading}
+        loadingContent={
+          <div className="flex flex-col items-center justify-center mt-20 w-full">
+            <Spinner label={loadingLabel} />
+          </div>
+        }
+        items={sortedItems}
+        emptyContent={"No hay datos para mostrar."}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey.toString())}</TableCell>}

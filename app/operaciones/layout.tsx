@@ -4,7 +4,7 @@ export default function OperacionesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-col items-left justify-left px-5">
+    <section className="flex flex-col items-left justify-left">
       <div className="inline-block max-w-full text-center justify-center">
         {children}
       </div>

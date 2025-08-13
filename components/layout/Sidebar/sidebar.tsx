@@ -64,7 +64,7 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     const sectionClasses = {
       ...sectionClassesProp,
       base: cn(sectionClassesProp?.base, "w-full", {
-        "pr-14 max-w-[44px]": isCompact,
+        "pr-9 max-w-[70px]": isCompact,
 
       }),
       group: cn(sectionClassesProp?.group, {

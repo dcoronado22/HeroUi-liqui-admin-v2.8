@@ -1,0 +1,967 @@
+{
+    "logs": [
+        {
+            "id": "161700",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:51:34+00:00",
+            "finishedOn": "2025-08-12T16:51:35+00:00",
+            "operationId": "ef8f3c38-5c70-4b50-aeb3-0a473c1d7291",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161699",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:49:33+00:00",
+            "finishedOn": "2025-08-12T16:49:34+00:00",
+            "operationId": "fe44a263-33ac-422b-96b0-cd63c333ef30",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161698",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:47:33+00:00",
+            "finishedOn": "2025-08-12T16:47:34+00:00",
+            "operationId": "533bda79-2726-45be-8148-b564a578e370",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161697",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:45:34+00:00",
+            "finishedOn": "2025-08-12T16:45:34+00:00",
+            "operationId": "d1547309-5739-4be7-b452-a3dccb77f269",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161696",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:43:33+00:00",
+            "finishedOn": "2025-08-12T16:43:34+00:00",
+            "operationId": "30f4ad63-cd28-4883-af7f-bb49afdfbd76",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161695",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:41:33+00:00",
+            "finishedOn": "2025-08-12T16:41:34+00:00",
+            "operationId": "dc01543e-ea83-4ef9-9182-6c7529b0a76b",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161694",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:39:33+00:00",
+            "finishedOn": "2025-08-12T16:39:34+00:00",
+            "operationId": "4479f3b9-50ab-4000-acae-eab638991ec8",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161693",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:37:33+00:00",
+            "finishedOn": "2025-08-12T16:37:34+00:00",
+            "operationId": "dc57ca67-b688-4526-9644-f0701b9e9455",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161692",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:35:33+00:00",
+            "finishedOn": "2025-08-12T16:35:34+00:00",
+            "operationId": "2a31c808-2a53-4033-90b5-eea5377dc9ba",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161691",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:33:33+00:00",
+            "finishedOn": "2025-08-12T16:33:34+00:00",
+            "operationId": "648890f1-c3e4-4dce-a76a-c1241750d95a",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161690",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:31:34+00:00",
+            "finishedOn": "2025-08-12T16:31:34+00:00",
+            "operationId": "1a4c6253-e7f2-4ef7-bae5-debccf85e5f7",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161689",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:29:34+00:00",
+            "finishedOn": "2025-08-12T16:29:35+00:00",
+            "operationId": "9a2625c4-07db-48ca-b5d4-d4b98bbc5168",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161688",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:27:33+00:00",
+            "finishedOn": "2025-08-12T16:27:34+00:00",
+            "operationId": "7fb10cc2-5f07-4562-aafc-b910eb227a98",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161687",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:25:33+00:00",
+            "finishedOn": "2025-08-12T16:25:34+00:00",
+            "operationId": "fc9a2795-34fd-4e77-9181-813e715da8ad",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161686",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:23:33+00:00",
+            "finishedOn": "2025-08-12T16:23:34+00:00",
+            "operationId": "a0cab251-4bee-4cfb-a5c0-ba2e58ce9949",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161680",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:21:33+00:00",
+            "finishedOn": "2025-08-12T16:21:34+00:00",
+            "operationId": "dc5f59ca-5ff0-4d10-b255-b5dabcbd6aa0",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161677",
+            "serviceName": "GetDocumentosExpediente",
+            "startedOn": "2025-08-12T16:19:33+00:00",
+            "finishedOn": "2025-08-12T16:19:33+00:00",
+            "operationId": "4e61c7c9-0fcd-4ef3-822e-1e5fefcd9ff4",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161676",
+            "serviceName": "AlmaceneDatos",
+            "startedOn": "2025-08-12T16:19:32+00:00",
+            "finishedOn": "2025-08-12T16:19:33+00:00",
+            "operationId": "f8799c90-01ac-4725-b5ab-c9d991195f47",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161675",
+            "serviceName": "AlmaceneDatos",
+            "startedOn": "2025-08-12T16:19:31+00:00",
+            "finishedOn": "2025-08-12T16:19:32+00:00",
+            "operationId": "7bf670d9-0407-4355-bef9-a01e91498856",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161674",
+            "serviceName": "AlmaceneDatos",
+            "startedOn": "2025-08-12T16:19:30+00:00",
+            "finishedOn": "2025-08-12T16:19:31+00:00",
+            "operationId": "cf4ce714-a567-4e11-81f5-b248a57942c4",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161673",
+            "serviceName": "SeleccionClientesEstudio",
+            "startedOn": "2025-08-12T16:19:28+00:00",
+            "finishedOn": "2025-08-12T16:19:29+00:00",
+            "operationId": "4157a6c5-bf16-4838-bfe1-0faced080507",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161670",
+            "serviceName": "CreeEmpresaFromVinculacion",
+            "startedOn": "2025-08-12T16:19:20+00:00",
+            "finishedOn": "2025-08-12T16:19:21+00:00",
+            "operationId": "9e6f76ab-7e74-40b0-9940-6771e80ab922",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161669",
+            "serviceName": "CreateFolder",
+            "startedOn": "2025-08-12T16:19:18+00:00",
+            "finishedOn": "2025-08-12T16:19:19+00:00",
+            "operationId": "be44f8b2-b34c-4f49-abca-d0968e2d5f94",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Succeeded",
+            "messages": "",
+            "text": "Succeeded"
+        },
+        {
+            "id": "161667",
+            "serviceName": "ConsulteBuroAvalista",
+            "startedOn": "2025-08-12T16:19:05+00:00",
+            "finishedOn": "2025-08-12T16:19:06+00:00",
+            "operationId": "aae9983f-1ffe-4a7c-ac81-7877ccb74b2b",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161664",
+            "serviceName": "ConsulteListas",
+            "startedOn": "2025-08-12T16:18:42+00:00",
+            "finishedOn": "2025-08-12T16:18:51+00:00",
+            "operationId": "a813b673-ce27-46cd-acb7-75cbbcd269e1",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161660",
+            "serviceName": "AutorizacionBuroAvalista",
+            "startedOn": "2025-08-12T16:17:19+00:00",
+            "finishedOn": "2025-08-12T16:17:25+00:00",
+            "operationId": "4c8a2c10-c7cf-402a-aef3-618d0a4f1d9a",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161659",
+            "serviceName": "ConsulteBuro",
+            "startedOn": "2025-08-12T16:16:34+00:00",
+            "finishedOn": "2025-08-12T16:16:35+00:00",
+            "operationId": "26d5f04c-b968-43ef-913e-531c5e7552ff",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161656",
+            "serviceName": "RazonesFinancieras",
+            "startedOn": "2025-08-12T16:15:27+00:00",
+            "finishedOn": "2025-08-12T16:15:28+00:00",
+            "operationId": "9b987dd6-8cab-4338-8e28-f44680c14e48",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161650",
+            "serviceName": "ConsulteFactorajeGeneral",
+            "startedOn": "2025-08-12T16:15:17+00:00",
+            "finishedOn": "2025-08-12T16:15:18+00:00",
+            "operationId": "ac2a0aa5-b71d-4dee-80c9-ef2f2ed31f87",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161654",
+            "serviceName": "ConsulteAML",
+            "startedOn": "2025-08-12T16:15:16+00:00",
+            "finishedOn": "2025-08-12T16:15:27+00:00",
+            "operationId": "97a768c4-63f1-4c1a-899b-7a57fa681673",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161653",
+            "serviceName": "ConsultaCashFlow",
+            "startedOn": "2025-08-12T16:15:16+00:00",
+            "finishedOn": "2025-08-12T16:15:18+00:00",
+            "operationId": "bbe5ad18-2f7a-4803-b0ea-e19f01057ece",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161651",
+            "serviceName": "ConsulteTop10",
+            "startedOn": "2025-08-12T16:15:15+00:00",
+            "finishedOn": "2025-08-12T16:15:18+00:00",
+            "operationId": "4f8341e0-aa03-44bd-b624-b837ab9a1a13",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161648",
+            "serviceName": "CallBackSituacionFiscal",
+            "startedOn": "2025-08-12T16:15:15+00:00",
+            "finishedOn": "2025-08-12T16:15:15+00:00",
+            "operationId": "e000e4ca-6aef-4979-a092-820708ddcda6",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161647",
+            "serviceName": "AutorizacionConsultaBuro",
+            "startedOn": "2025-08-12T16:15:08+00:00",
+            "finishedOn": "2025-08-12T16:15:13+00:00",
+            "operationId": "9ba6fea0-3150-42e9-ac5e-c3aa7d2f062c",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161649",
+            "serviceName": "ConsultaSituacionFiscal",
+            "startedOn": "2025-08-12T16:14:41+00:00",
+            "finishedOn": "2025-08-12T16:15:16+00:00",
+            "operationId": "4f263897-8cb3-4c53-a784-4be47b0d64e3",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        },
+        {
+            "id": "161646",
+            "serviceName": "ValideClaveCiec",
+            "startedOn": "2025-08-12T16:14:41+00:00",
+            "finishedOn": "2025-08-12T16:14:41+00:00",
+            "operationId": "7857df66-f3ef-4f91-8f8c-24d4da5a84ac",
+            "correlationId": "33515aa1-b58b-4c95-9bc7-65c8260a8945",
+            "succeeded": true,
+            "reasonCode": 1,
+            "reason": "Operación exitosa",
+            "messages": "",
+            "text": "Operación exitosa"
+        }
+    ],
+    "documents": [
+        {
+            "integradorName": "miFiel",
+            "documents": [
+                {
+                    "name": "Create_40963a11-0dd2-49e7-84f1-5f24bf694cf4_request.json",
+                    "path": "miFiel/33515aa1-b58b-4c95-9bc7-65c8260a8945/Create_40963a11-0dd2-49e7-84f1-5f24bf694cf4_request.json",
+                    "lastModified": "2025-08-12T16:17:26+00:00"
+                },
+                {
+                    "name": "Create_40963a11-0dd2-49e7-84f1-5f24bf694cf4_response.json",
+                    "path": "miFiel/33515aa1-b58b-4c95-9bc7-65c8260a8945/Create_40963a11-0dd2-49e7-84f1-5f24bf694cf4_response.json",
+                    "lastModified": "2025-08-12T16:17:26+00:00"
+                },
+                {
+                    "name": "Create_ee75cd09-19c1-4d21-8650-e4b1ff3eaebc_request.json",
+                    "path": "miFiel/33515aa1-b58b-4c95-9bc7-65c8260a8945/Create_ee75cd09-19c1-4d21-8650-e4b1ff3eaebc_request.json",
+                    "lastModified": "2025-08-12T16:15:14+00:00"
+                },
+                {
+                    "name": "Create_ee75cd09-19c1-4d21-8650-e4b1ff3eaebc_response.json",
+                    "path": "miFiel/33515aa1-b58b-4c95-9bc7-65c8260a8945/Create_ee75cd09-19c1-4d21-8650-e4b1ff3eaebc_response.json",
+                    "lastModified": "2025-08-12T16:15:14+00:00"
+                }
+            ]
+        },
+        {
+            "integradorName": "mega",
+            "documents": [
+                {
+                    "name": "ConsultaBuroPersonaMoral_0a78b830-d8a3-47df-ac29-56aa650ec19b_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/ConsultaBuroPersonaMoral_0a78b830-d8a3-47df-ac29-56aa650ec19b_request.json",
+                    "lastModified": "2025-08-12T16:19:07+00:00"
+                },
+                {
+                    "name": "ConsultaBuroPersonaMoral_0a78b830-d8a3-47df-ac29-56aa650ec19b_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/ConsultaBuroPersonaMoral_0a78b830-d8a3-47df-ac29-56aa650ec19b_response.json",
+                    "lastModified": "2025-08-12T16:19:07+00:00"
+                },
+                {
+                    "name": "AMLPersonaMoral_2e2e799c-5527-45e9-b6a2-442a566dfe04_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/AMLPersonaMoral_2e2e799c-5527-45e9-b6a2-442a566dfe04_request.json",
+                    "lastModified": "2025-08-12T16:18:52+00:00"
+                },
+                {
+                    "name": "AMLPersonaMoral_2e2e799c-5527-45e9-b6a2-442a566dfe04_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/AMLPersonaMoral_2e2e799c-5527-45e9-b6a2-442a566dfe04_response.json",
+                    "lastModified": "2025-08-12T16:18:52+00:00"
+                },
+                {
+                    "name": "ConsultaBuroPersonaMoral_be1b32ec-aa27-408e-9888-edf0b46870d5_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/ConsultaBuroPersonaMoral_be1b32ec-aa27-408e-9888-edf0b46870d5_request.json",
+                    "lastModified": "2025-08-12T16:16:36+00:00"
+                },
+                {
+                    "name": "ConsultaBuroPersonaMoral_be1b32ec-aa27-408e-9888-edf0b46870d5_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/ConsultaBuroPersonaMoral_be1b32ec-aa27-408e-9888-edf0b46870d5_response.json",
+                    "lastModified": "2025-08-12T16:16:36+00:00"
+                },
+                {
+                    "name": "ConsulteRazonesFinancieras_bd8f76ea-2698-47ac-9d05-7385c831f881_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/ConsulteRazonesFinancieras_bd8f76ea-2698-47ac-9d05-7385c831f881_request.json",
+                    "lastModified": "2025-08-12T16:15:29+00:00"
+                },
+                {
+                    "name": "ConsulteRazonesFinancieras_bd8f76ea-2698-47ac-9d05-7385c831f881_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/ConsulteRazonesFinancieras_bd8f76ea-2698-47ac-9d05-7385c831f881_response.json",
+                    "lastModified": "2025-08-12T16:15:29+00:00"
+                },
+                {
+                    "name": "AMLPersonaMoral_974b02f1-6db7-449b-8607-1fdf62218743_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/AMLPersonaMoral_974b02f1-6db7-449b-8607-1fdf62218743_request.json",
+                    "lastModified": "2025-08-12T16:15:26+00:00"
+                },
+                {
+                    "name": "AMLPersonaMoral_974b02f1-6db7-449b-8607-1fdf62218743_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/AMLPersonaMoral_974b02f1-6db7-449b-8607-1fdf62218743_response.json",
+                    "lastModified": "2025-08-12T16:15:26+00:00"
+                },
+                {
+                    "name": "FactorajeGeneral_e3b9a829-a32a-42f4-b280-10c1f7548fe8_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/FactorajeGeneral_e3b9a829-a32a-42f4-b280-10c1f7548fe8_request.json",
+                    "lastModified": "2025-08-12T16:15:19+00:00"
+                },
+                {
+                    "name": "FactorajeGeneral_e3b9a829-a32a-42f4-b280-10c1f7548fe8_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/FactorajeGeneral_e3b9a829-a32a-42f4-b280-10c1f7548fe8_response.json",
+                    "lastModified": "2025-08-12T16:15:19+00:00"
+                },
+                {
+                    "name": "CashFlow_868ecf38-e09c-42ea-bd2f-0bf894ffe661_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/CashFlow_868ecf38-e09c-42ea-bd2f-0bf894ffe661_request.json",
+                    "lastModified": "2025-08-12T16:15:18+00:00"
+                },
+                {
+                    "name": "CashFlow_868ecf38-e09c-42ea-bd2f-0bf894ffe661_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/CashFlow_868ecf38-e09c-42ea-bd2f-0bf894ffe661_response.json",
+                    "lastModified": "2025-08-12T16:15:18+00:00"
+                },
+                {
+                    "name": "Top10_4b5dc90c-da10-49fd-a2f7-97345d2e8a73_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/Top10_4b5dc90c-da10-49fd-a2f7-97345d2e8a73_request.json",
+                    "lastModified": "2025-08-12T16:15:18+00:00"
+                },
+                {
+                    "name": "Top10_4b5dc90c-da10-49fd-a2f7-97345d2e8a73_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/Top10_4b5dc90c-da10-49fd-a2f7-97345d2e8a73_response.json",
+                    "lastModified": "2025-08-12T16:15:18+00:00"
+                },
+                {
+                    "name": "SituacionFiscal_91c390a3-d541-4182-9e3d-c98d181c0d63_request.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/SituacionFiscal_91c390a3-d541-4182-9e3d-c98d181c0d63_request.json",
+                    "lastModified": "2025-08-12T16:15:16+00:00"
+                },
+                {
+                    "name": "SituacionFiscal_91c390a3-d541-4182-9e3d-c98d181c0d63_response.json",
+                    "path": "mega/33515aa1-b58b-4c95-9bc7-65c8260a8945/SituacionFiscal_91c390a3-d541-4182-9e3d-c98d181c0d63_response.json",
+                    "lastModified": "2025-08-12T16:15:16+00:00"
+                }
+            ]
+        },
+        {
+            "integradorName": "expedienteAzul",
+            "documents": [
+                {
+                    "name": "GetDocumentos_6d56897c-e136-402a-9b8b-b630885b548e_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_6d56897c-e136-402a-9b8b-b630885b548e_request.json",
+                    "lastModified": "2025-08-12T16:51:36+00:00"
+                },
+                {
+                    "name": "GetDocumentos_6d56897c-e136-402a-9b8b-b630885b548e_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_6d56897c-e136-402a-9b8b-b630885b548e_response.json",
+                    "lastModified": "2025-08-12T16:51:36+00:00"
+                },
+                {
+                    "name": "GetDocumentos_6d10b644-e759-4a3b-946f-405249ba1dd2_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_6d10b644-e759-4a3b-946f-405249ba1dd2_request.json",
+                    "lastModified": "2025-08-12T16:49:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_6d10b644-e759-4a3b-946f-405249ba1dd2_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_6d10b644-e759-4a3b-946f-405249ba1dd2_response.json",
+                    "lastModified": "2025-08-12T16:49:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_87dbacd1-efad-483d-9931-bac6088be51e_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_87dbacd1-efad-483d-9931-bac6088be51e_request.json",
+                    "lastModified": "2025-08-12T16:47:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_87dbacd1-efad-483d-9931-bac6088be51e_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_87dbacd1-efad-483d-9931-bac6088be51e_response.json",
+                    "lastModified": "2025-08-12T16:47:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_24bc344a-f6dd-4803-9d69-fe94e3e78287_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_24bc344a-f6dd-4803-9d69-fe94e3e78287_request.json",
+                    "lastModified": "2025-08-12T16:45:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_24bc344a-f6dd-4803-9d69-fe94e3e78287_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_24bc344a-f6dd-4803-9d69-fe94e3e78287_response.json",
+                    "lastModified": "2025-08-12T16:45:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_e5e52b2f-31c0-4763-8ad0-a34bcc189b3d_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_e5e52b2f-31c0-4763-8ad0-a34bcc189b3d_request.json",
+                    "lastModified": "2025-08-12T16:43:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_e5e52b2f-31c0-4763-8ad0-a34bcc189b3d_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_e5e52b2f-31c0-4763-8ad0-a34bcc189b3d_response.json",
+                    "lastModified": "2025-08-12T16:43:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_5616195c-7747-4950-99e4-7beb125df3c7_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_5616195c-7747-4950-99e4-7beb125df3c7_request.json",
+                    "lastModified": "2025-08-12T16:41:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_5616195c-7747-4950-99e4-7beb125df3c7_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_5616195c-7747-4950-99e4-7beb125df3c7_response.json",
+                    "lastModified": "2025-08-12T16:41:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_b70ea160-233c-4853-a434-74b36125dd42_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_b70ea160-233c-4853-a434-74b36125dd42_request.json",
+                    "lastModified": "2025-08-12T16:39:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_b70ea160-233c-4853-a434-74b36125dd42_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_b70ea160-233c-4853-a434-74b36125dd42_response.json",
+                    "lastModified": "2025-08-12T16:39:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_5611c905-851b-45e5-864b-6d9759f07cad_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_5611c905-851b-45e5-864b-6d9759f07cad_request.json",
+                    "lastModified": "2025-08-12T16:37:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_5611c905-851b-45e5-864b-6d9759f07cad_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_5611c905-851b-45e5-864b-6d9759f07cad_response.json",
+                    "lastModified": "2025-08-12T16:37:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_58f9c9a7-d4b8-436c-a1f1-c1ebd96daf43_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_58f9c9a7-d4b8-436c-a1f1-c1ebd96daf43_request.json",
+                    "lastModified": "2025-08-12T16:35:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_58f9c9a7-d4b8-436c-a1f1-c1ebd96daf43_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_58f9c9a7-d4b8-436c-a1f1-c1ebd96daf43_response.json",
+                    "lastModified": "2025-08-12T16:35:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_20075edf-b63f-4aee-8c0a-140e27989748_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_20075edf-b63f-4aee-8c0a-140e27989748_request.json",
+                    "lastModified": "2025-08-12T16:33:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_20075edf-b63f-4aee-8c0a-140e27989748_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_20075edf-b63f-4aee-8c0a-140e27989748_response.json",
+                    "lastModified": "2025-08-12T16:33:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_370fc088-caf3-466c-b47f-11cacd603608_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_370fc088-caf3-466c-b47f-11cacd603608_request.json",
+                    "lastModified": "2025-08-12T16:31:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_370fc088-caf3-466c-b47f-11cacd603608_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_370fc088-caf3-466c-b47f-11cacd603608_response.json",
+                    "lastModified": "2025-08-12T16:31:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_40764265-37f8-4884-8121-69a681da0212_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_40764265-37f8-4884-8121-69a681da0212_request.json",
+                    "lastModified": "2025-08-12T16:29:36+00:00"
+                },
+                {
+                    "name": "GetDocumentos_40764265-37f8-4884-8121-69a681da0212_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_40764265-37f8-4884-8121-69a681da0212_response.json",
+                    "lastModified": "2025-08-12T16:29:36+00:00"
+                },
+                {
+                    "name": "GetDocumentos_f9ed6738-cec4-4ce6-8a0d-28bfff8005fd_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_f9ed6738-cec4-4ce6-8a0d-28bfff8005fd_request.json",
+                    "lastModified": "2025-08-12T16:27:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_f9ed6738-cec4-4ce6-8a0d-28bfff8005fd_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_f9ed6738-cec4-4ce6-8a0d-28bfff8005fd_response.json",
+                    "lastModified": "2025-08-12T16:27:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_532e21d6-31c0-4917-b95e-1e2e6a89562b_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_532e21d6-31c0-4917-b95e-1e2e6a89562b_request.json",
+                    "lastModified": "2025-08-12T16:25:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_532e21d6-31c0-4917-b95e-1e2e6a89562b_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_532e21d6-31c0-4917-b95e-1e2e6a89562b_response.json",
+                    "lastModified": "2025-08-12T16:25:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_7edbacbd-aa7d-4cb3-b73b-c26a7d07c1ac_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_7edbacbd-aa7d-4cb3-b73b-c26a7d07c1ac_request.json",
+                    "lastModified": "2025-08-12T16:23:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_7edbacbd-aa7d-4cb3-b73b-c26a7d07c1ac_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_7edbacbd-aa7d-4cb3-b73b-c26a7d07c1ac_response.json",
+                    "lastModified": "2025-08-12T16:23:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_4215c2db-ba94-4af6-a0cb-6fdfca1e9498_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_4215c2db-ba94-4af6-a0cb-6fdfca1e9498_request.json",
+                    "lastModified": "2025-08-12T16:21:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_4215c2db-ba94-4af6-a0cb-6fdfca1e9498_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_4215c2db-ba94-4af6-a0cb-6fdfca1e9498_response.json",
+                    "lastModified": "2025-08-12T16:21:35+00:00"
+                },
+                {
+                    "name": "GetDocumentos_124b8664-d622-4e24-a115-5c288751c8ad_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_124b8664-d622-4e24-a115-5c288751c8ad_request.json",
+                    "lastModified": "2025-08-12T16:19:34+00:00"
+                },
+                {
+                    "name": "GetDocumentos_124b8664-d622-4e24-a115-5c288751c8ad_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_124b8664-d622-4e24-a115-5c288751c8ad_response.json",
+                    "lastModified": "2025-08-12T16:19:34+00:00"
+                },
+                {
+                    "name": "UploadFile_960f46ac-0d8b-4a4d-a0d4-dda9a63cd900_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_960f46ac-0d8b-4a4d-a0d4-dda9a63cd900_request.json",
+                    "lastModified": "2025-08-12T16:19:29+00:00"
+                },
+                {
+                    "name": "UploadFile_960f46ac-0d8b-4a4d-a0d4-dda9a63cd900_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_960f46ac-0d8b-4a4d-a0d4-dda9a63cd900_response.json",
+                    "lastModified": "2025-08-12T16:19:29+00:00"
+                },
+                {
+                    "name": "UploadFile_e674eb2c-a052-4280-b555-10533bb014af_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_e674eb2c-a052-4280-b555-10533bb014af_request.json",
+                    "lastModified": "2025-08-12T16:19:29+00:00"
+                },
+                {
+                    "name": "UploadFile_e674eb2c-a052-4280-b555-10533bb014af_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_e674eb2c-a052-4280-b555-10533bb014af_response.json",
+                    "lastModified": "2025-08-12T16:19:29+00:00"
+                },
+                {
+                    "name": "UploadFile_9a59d914-4bb6-409f-be84-de9a0cbc6caf_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_9a59d914-4bb6-409f-be84-de9a0cbc6caf_request.json",
+                    "lastModified": "2025-08-12T16:19:28+00:00"
+                },
+                {
+                    "name": "UploadFile_9a59d914-4bb6-409f-be84-de9a0cbc6caf_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_9a59d914-4bb6-409f-be84-de9a0cbc6caf_response.json",
+                    "lastModified": "2025-08-12T16:19:28+00:00"
+                },
+                {
+                    "name": "UploadFile_fd8b5fb4-0d91-44d0-809d-1feeabf6c4bd_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_fd8b5fb4-0d91-44d0-809d-1feeabf6c4bd_request.json",
+                    "lastModified": "2025-08-12T16:19:28+00:00"
+                },
+                {
+                    "name": "UploadFile_fd8b5fb4-0d91-44d0-809d-1feeabf6c4bd_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_fd8b5fb4-0d91-44d0-809d-1feeabf6c4bd_response.json",
+                    "lastModified": "2025-08-12T16:19:28+00:00"
+                },
+                {
+                    "name": "UploadFile_6162f774-480e-48ef-806b-6fa2691b8bac_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_6162f774-480e-48ef-806b-6fa2691b8bac_request.json",
+                    "lastModified": "2025-08-12T16:19:27+00:00"
+                },
+                {
+                    "name": "UploadFile_6162f774-480e-48ef-806b-6fa2691b8bac_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_6162f774-480e-48ef-806b-6fa2691b8bac_response.json",
+                    "lastModified": "2025-08-12T16:19:27+00:00"
+                },
+                {
+                    "name": "UploadFile_6a426149-0801-41b1-bdd6-52ff0a327a2b_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_6a426149-0801-41b1-bdd6-52ff0a327a2b_request.json",
+                    "lastModified": "2025-08-12T16:19:27+00:00"
+                },
+                {
+                    "name": "UploadFile_6a426149-0801-41b1-bdd6-52ff0a327a2b_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_6a426149-0801-41b1-bdd6-52ff0a327a2b_response.json",
+                    "lastModified": "2025-08-12T16:19:27+00:00"
+                },
+                {
+                    "name": "UploadFile_b2ffe399-b4c0-475a-8d98-bf15aeb9e1ce_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_b2ffe399-b4c0-475a-8d98-bf15aeb9e1ce_request.json",
+                    "lastModified": "2025-08-12T16:19:27+00:00"
+                },
+                {
+                    "name": "UploadFile_b2ffe399-b4c0-475a-8d98-bf15aeb9e1ce_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_b2ffe399-b4c0-475a-8d98-bf15aeb9e1ce_response.json",
+                    "lastModified": "2025-08-12T16:19:27+00:00"
+                },
+                {
+                    "name": "UploadFile_8f6d2de9-7e36-467c-b755-3d529dd08a9f_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_8f6d2de9-7e36-467c-b755-3d529dd08a9f_request.json",
+                    "lastModified": "2025-08-12T16:19:26+00:00"
+                },
+                {
+                    "name": "UploadFile_8f6d2de9-7e36-467c-b755-3d529dd08a9f_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_8f6d2de9-7e36-467c-b755-3d529dd08a9f_response.json",
+                    "lastModified": "2025-08-12T16:19:26+00:00"
+                },
+                {
+                    "name": "UploadFile_9be44fbb-5df4-45d2-97b3-a932e827e9c0_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_9be44fbb-5df4-45d2-97b3-a932e827e9c0_request.json",
+                    "lastModified": "2025-08-12T16:19:26+00:00"
+                },
+                {
+                    "name": "UploadFile_9be44fbb-5df4-45d2-97b3-a932e827e9c0_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_9be44fbb-5df4-45d2-97b3-a932e827e9c0_response.json",
+                    "lastModified": "2025-08-12T16:19:26+00:00"
+                },
+                {
+                    "name": "UploadFile_945f90ce-c84f-437c-a0a1-0b85f4970759_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_945f90ce-c84f-437c-a0a1-0b85f4970759_request.json",
+                    "lastModified": "2025-08-12T16:19:25+00:00"
+                },
+                {
+                    "name": "UploadFile_945f90ce-c84f-437c-a0a1-0b85f4970759_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_945f90ce-c84f-437c-a0a1-0b85f4970759_response.json",
+                    "lastModified": "2025-08-12T16:19:25+00:00"
+                },
+                {
+                    "name": "UploadFile_d6b7d4ac-c2d6-4d35-b800-0dc7477f03ff_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_d6b7d4ac-c2d6-4d35-b800-0dc7477f03ff_request.json",
+                    "lastModified": "2025-08-12T16:19:25+00:00"
+                },
+                {
+                    "name": "UploadFile_d6b7d4ac-c2d6-4d35-b800-0dc7477f03ff_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_d6b7d4ac-c2d6-4d35-b800-0dc7477f03ff_response.json",
+                    "lastModified": "2025-08-12T16:19:25+00:00"
+                },
+                {
+                    "name": "UploadFile_67cc3368-910d-4453-a164-e01ad7fd05f7_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_67cc3368-910d-4453-a164-e01ad7fd05f7_request.json",
+                    "lastModified": "2025-08-12T16:19:24+00:00"
+                },
+                {
+                    "name": "UploadFile_67cc3368-910d-4453-a164-e01ad7fd05f7_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_67cc3368-910d-4453-a164-e01ad7fd05f7_response.json",
+                    "lastModified": "2025-08-12T16:19:24+00:00"
+                },
+                {
+                    "name": "UploadFile_8441f037-6246-4ac7-86c3-50ff25eaf0f4_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_8441f037-6246-4ac7-86c3-50ff25eaf0f4_request.json",
+                    "lastModified": "2025-08-12T16:19:24+00:00"
+                },
+                {
+                    "name": "UploadFile_8441f037-6246-4ac7-86c3-50ff25eaf0f4_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_8441f037-6246-4ac7-86c3-50ff25eaf0f4_response.json",
+                    "lastModified": "2025-08-12T16:19:24+00:00"
+                },
+                {
+                    "name": "UploadFile_8ae06458-dcc8-4f68-aae1-1cb121b45a28_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_8ae06458-dcc8-4f68-aae1-1cb121b45a28_request.json",
+                    "lastModified": "2025-08-12T16:19:24+00:00"
+                },
+                {
+                    "name": "UploadFile_8ae06458-dcc8-4f68-aae1-1cb121b45a28_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_8ae06458-dcc8-4f68-aae1-1cb121b45a28_response.json",
+                    "lastModified": "2025-08-12T16:19:24+00:00"
+                },
+                {
+                    "name": "GetDocumentos_1a48ce7a-8f0f-4bc9-b114-011ce02a9cb6_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_1a48ce7a-8f0f-4bc9-b114-011ce02a9cb6_request.json",
+                    "lastModified": "2025-08-12T16:19:23+00:00"
+                },
+                {
+                    "name": "GetDocumentos_1a48ce7a-8f0f-4bc9-b114-011ce02a9cb6_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_1a48ce7a-8f0f-4bc9-b114-011ce02a9cb6_response.json",
+                    "lastModified": "2025-08-12T16:19:23+00:00"
+                },
+                {
+                    "name": "UploadFile_22ea4bdd-bc92-4d00-9305-d3b248da568b_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_22ea4bdd-bc92-4d00-9305-d3b248da568b_request.json",
+                    "lastModified": "2025-08-12T16:19:23+00:00"
+                },
+                {
+                    "name": "UploadFile_22ea4bdd-bc92-4d00-9305-d3b248da568b_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/UploadFile_22ea4bdd-bc92-4d00-9305-d3b248da568b_response.json",
+                    "lastModified": "2025-08-12T16:19:23+00:00"
+                },
+                {
+                    "name": "CreateFolder_c23fb8d7-ed56-4461-aaea-ca7a690ef51d_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/CreateFolder_c23fb8d7-ed56-4461-aaea-ca7a690ef51d_request.json",
+                    "lastModified": "2025-08-12T16:19:20+00:00"
+                },
+                {
+                    "name": "CreateFolder_c23fb8d7-ed56-4461-aaea-ca7a690ef51d_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/CreateFolder_c23fb8d7-ed56-4461-aaea-ca7a690ef51d_response.json",
+                    "lastModified": "2025-08-12T16:19:20+00:00"
+                },
+                {
+                    "name": "GetDocumentos_a547aec9-186d-4a0b-8d16-5a892a9dd351_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_a547aec9-186d-4a0b-8d16-5a892a9dd351_request.json",
+                    "lastModified": "2025-08-12T16:15:28+00:00"
+                },
+                {
+                    "name": "GetDocumentos_a547aec9-186d-4a0b-8d16-5a892a9dd351_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_a547aec9-186d-4a0b-8d16-5a892a9dd351_response.json",
+                    "lastModified": "2025-08-12T16:15:28+00:00"
+                },
+                {
+                    "name": "GetDocumentos_14f7398c-17c1-4a60-8f4a-8c2ee93a3c3a_request.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_14f7398c-17c1-4a60-8f4a-8c2ee93a3c3a_request.json",
+                    "lastModified": "2025-08-12T16:15:19+00:00"
+                },
+                {
+                    "name": "GetDocumentos_14f7398c-17c1-4a60-8f4a-8c2ee93a3c3a_response.json",
+                    "path": "expedienteAzul/33515aa1-b58b-4c95-9bc7-65c8260a8945/GetDocumentos_14f7398c-17c1-4a60-8f4a-8c2ee93a3c3a_response.json",
+                    "lastModified": "2025-08-12T16:15:19+00:00"
+                }
+            ]
+        }
+    ],
+    "id": null,
+    "token": null,
+    "succeeded": true,
+    "reasonCode": {
+        "value": 1,
+        "description": "Operación exitosa"
+    },
+    "messages": []
+}

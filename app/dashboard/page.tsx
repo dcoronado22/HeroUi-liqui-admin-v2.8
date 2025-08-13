@@ -1,9 +1,13 @@
-import { title } from "@/components/primitives";
+"use client";
+
+import { useMsal } from "@azure/msal-react";
+import React from "react";
 
 export default function DashboardPage() {
-  return (
-    <div>
-      <h1 className={title()}>Dashboard</h1>
-    </div>
-  );
+  const { instance, accounts, inProgress } = useMsal();
+  const account = instance.getActiveAccount() || accounts[0];
+
+  if (!account) return <div>Debes iniciar sesión</div>;
+  return <div>Hola, {account.name}</div>;
+
 }

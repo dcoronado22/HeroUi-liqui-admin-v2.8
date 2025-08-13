@@ -2,12 +2,12 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Link } from "@heroui/link";
 import clsx from "clsx";
-
 import { Providers } from "./providers";
-
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import AppShell from "@/components/layout/AppShell";
+import AuthGate from "@/components/AuthGate";
+import ApiProvider from "./api-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -41,8 +41,13 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
+
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <AppShell children={children} />
+          <AuthGate>
+            <ApiProvider>
+              <AppShell children={children} />
+            </ApiProvider>
+          </AuthGate>
         </Providers>
       </body>
     </html>
