@@ -3,10 +3,10 @@
 import React from "react";
 import {
     Card, CardBody, CardHeader, Chip, Input, Button, Tooltip,
-    Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton,
-    Divider
+    Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Skeleton, Divider
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import { useVinculacion } from "@/contexts/VinculacionProvider";
 import { getDocumentosExpediente, ExpedienteDoc } from "@/lib/api/getDocumentosExpediente";
 
 const chipEstado = (s: ExpedienteDoc["status"]) => {
@@ -16,7 +16,10 @@ const chipEstado = (s: ExpedienteDoc["status"]) => {
     return <Chip size="sm" color="danger" variant="flat">Inválido</Chip>;
 };
 
-export default function ExpedienteAzulCard({ id }: { id: string }) {
+export default function ExpedienteAzulCard() {
+    const ctx = useVinculacion(); // ← tomamos id, rfc y detalle del provider
+    const folderId = ctx.detalle?.datosExpedienteAzul?.folder_id ?? null; // del GetDetalleVinculacion
+
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<string | null>(null);
     const [rows, setRows] = React.useState<ExpedienteDoc[]>([]);
@@ -24,19 +27,31 @@ export default function ExpedienteAzulCard({ id }: { id: string }) {
 
     React.useEffect(() => {
         let on = true;
+
         (async () => {
             try {
                 setLoading(true);
-                const data = await getDocumentosExpediente(id);
+                setError(null);
+
+                // Si aún no tenemos folderId (p.ej. el detalle no ha llegado), no llamamos nada.
+                if (!folderId) {
+                    setRows([]);
+                    return;
+                }
+
+                // Preferencia: loader del contexto (cachea) → fallback a helper local
+                const docs = await ctx.loadDocumentosExpediente();
+                const data = docs ?? (await getDocumentosExpediente(String(folderId)));
                 if (on) setRows(data);
             } catch (e: any) {
-                setError(e?.message ?? "Error");
+                on && setError(e?.message ?? "Error");
             } finally {
-                if (on) setLoading(false);
+                on && setLoading(false);
             }
         })();
+
         return () => { on = false; };
-    }, [id]);
+    }, [folderId]);
 
     const filtered = rows.filter(r => r.name.toLowerCase().includes(q.toLowerCase()));
     const uploaded = rows.filter(r => r.filesCount > 0).length;
@@ -58,6 +73,7 @@ export default function ExpedienteAzulCard({ id }: { id: string }) {
         </Tooltip>
     );
 
+    // Loaders / errores
     if (loading) {
         return (
             <Card shadow="sm">
@@ -82,22 +98,35 @@ export default function ExpedienteAzulCard({ id }: { id: string }) {
         );
     }
 
+    if (!folderId) {
+        return (
+            <Card shadow="sm">
+                <CardBody className="text-foreground-500">
+                    Aún no hay **FolderId** del expediente (el detalle de vinculación no ha sido cargado).
+                </CardBody>
+            </Card>
+        );
+    }
+
     if (error) {
         return <Card shadow="sm"><CardBody className="text-danger">{error}</CardBody></Card>;
     }
 
     return (
-        <Card shadow="sm" className="text-left px-5 py-2  mb-5 dark:border-default-100 border border-default-100 shadow-xl shadow-black/20 dark:shadow-black/40">
+        <Card shadow="sm" className="text-left px-5 py-2 mb-5 dark:border-default-100 border border-default-100 shadow-xl shadow-black/20 dark:shadow-black/40">
             <CardHeader className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2 justify-between">
                     <Icon icon="solar:shield-check-linear" className="text-xl" />
                     <div className="font-semibold">Datos Expediente Azul</div>
                     <div className="text-small text-foreground-500">
-                        Documentos subidos: <span className="font-semibold">{uploaded}</span> de <span className="font-semibold">{rows.length}</span>
+                        Documentos subidos: <span className="font-semibold">{uploaded}</span>{" "}
+                        de <span className="font-semibold">{rows.length}</span>
                     </div>
                 </div>
             </CardHeader>
+
             <Divider className="my-2" />
+
             <CardBody className="space-y-4">
                 <Input
                     placeholder="Buscar documento..."
@@ -110,10 +139,7 @@ export default function ExpedienteAzulCard({ id }: { id: string }) {
                 <Table
                     aria-label="Tabla de documentos del expediente"
                     removeWrapper
-                    classNames={{
-                        th: "text-foreground font-medium",
-                        td: "py-4",
-                    }}
+                    classNames={{ th: "text-foreground font-medium", td: "py-4" }}
                 >
                     <TableHeader>
                         <TableColumn>Nombre Documento</TableColumn>
@@ -124,7 +150,7 @@ export default function ExpedienteAzulCard({ id }: { id: string }) {
                     <TableBody emptyContent="Sin resultados." items={filtered}>
                         {(r) => (
                             <TableRow key={r.id}>
-                                <TableCell>{r.name}</TableCell>
+                                <TableCell className="max-w-[48ch] truncate" title={r.name}>{r.name}</TableCell>
                                 <TableCell>
                                     <Chip size="sm" color={r.filesCount > 0 ? "success" : "default"} variant="flat">
                                         {r.filesCount} archivo(s)

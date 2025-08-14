@@ -1,15 +1,14 @@
 "use client";
 import BarDivergingGraph, { DivergingBarCardItem } from "@/components/Graphs/BarDivergingGraph";
 import BarGraph, { BarCardItem } from "@/components/Graphs/BarGraph";
-import BarsLateralGraph, { LateralBarCardItem } from "@/components/Graphs/BarsLateralGraph";
 import DonutGraph, { DonutCardItem } from "@/components/Graphs/DonutGraph";
 import GraphDual, { GraphDualProps } from "@/components/Graphs/DualGraph";
-import HeatmapHero, { HeatmapDatum } from "@/components/Graphs/HeatMap";
+import HeatmapHero from "@/components/Graphs/HeatMap";
 import KPIStatBarCard, { KPIStatItem } from "@/components/KPIs/KPIStatBarCard";
 import KPIStatCard from "@/components/KPIs/KPIStatCard";
-import { DashboardPayload, RawDashboardResponse, buildBarOperValorPorDia, buildDivergingOperTendencia, buildDonutOperEstados, buildDonutVincEstados, buildGraphDualProps, getDashboardAnalitico, heatmapSample } from "@/lib/api/getDashboardAnalitico";
-import { Card, Skeleton, Tab, tabs, Tabs } from "@heroui/react";
-// import { Card } from "@heroui/react";
+import { getDashboardAnalitico, type DashboardPayload, type RawDashboardResponse } from "@/lib/api/getDashboardAnalitico";
+import { buildBarOperValorPorDia, buildDivergingOperTendencia, buildDonutOperEstados, buildDonutVincEstados, buildGraphDualProps, buildHeatmapVinculaciones } from "@/lib/transformers/dashboardBindings";
+import { Card, Skeleton } from "@heroui/react";
 import React from "react";
 
 const itemsCard: KPIStatItem[] = [
@@ -32,66 +31,7 @@ const itemsCard: KPIStatItem[] = [
   },
 ];
 
-const itemsBarLateral: LateralBarCardItem[] = [
-  {
-    key: "energy",
-    title: "Avg. Energy Activity",
-    value: "580/280",
-    unit: "kcal",
-    categories: ["Low", "Medium", "High"],
-    color: "default",
-    chartData: [
-      { weekday: "Mon", Low: 120, Medium: 280, High: 180 },
-      { weekday: "Tue", Low: 150, Medium: 320, High: 220 },
-      // ...
-    ],
-  },
-];
-
-const itemsBarDiverging: DivergingBarCardItem[] = [
-  {
-    key: "expenses",
-    title: "Monthly Expenses",
-    value: "$5,420",
-    unit: "avg",
-    categories: ["Expenses", "Savings"],
-    color: "default",
-    chartData: [
-      { month: "Jan", Expenses: 1340, Savings: -1340 },
-      { month: "Feb", Expenses: 450, Savings: -750 },
-      // ...
-    ],
-  },
-];
-
-const sampleData: HeatmapDatum[] = [
-  { x: "L", y: "1", value: 3 },
-  { x: "M", y: "1", value: 8 },
-  { x: "M", y: "2", value: 2 },
-  { x: "J", y: "3", value: 6 },
-  { x: "V", y: "5", value: 1 },
-  { x: "S", y: "7", value: 0 },
-  { x: "D", y: "8", value: 4 },
-  // agrega más para ver la grilla completa
-];
-
-const itemsBar: BarCardItem[] = [
-  {
-    key: "energy",
-    title: "Avg. Energy Activity",
-    value: "580/280",
-    unit: "kcal",
-    categories: ["Low", "Medium", "High"],
-    color: "primary",
-    chartData: [
-      { weekday: "Mon", Low: 120, Medium: 280, High: 180 },
-      { weekday: "Tue", Low: 150, Medium: 320, High: 220 },
-      // ...
-    ],
-  },
-];
-
-const xDom = ["L", "M", "M", "J", "V", "S", "D"] as const; // ejemplo (puedes inferir)
+const xDom = ["L", "M", "M", "J", "V", "S", "D"] as const;
 const yDom = ["1", "2", "3", "4", "5", "6", "7", "8"] as const;
 
 
@@ -140,23 +80,6 @@ const cardsKPI = [
   }
 ];
 
-const items: DonutCardItem[] = [
-  {
-    key: "traffic",
-    title: "Traffic Sources",
-    total: 224000,
-    unit: "Visitors",
-    categories: ["Search", "Direct", "Social", "Referral"],
-    color: "primary",
-    chartData: [
-      { name: "Search", value: 400 },
-      { name: "Direct", value: 300 },
-      { name: "Social", value: 300 },
-      { name: "Referral", value: 200 },
-    ],
-  },
-];
-
 export default function HomePage() {
   const [data, setData] = React.useState<RawDashboardResponse | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -199,9 +122,8 @@ export default function HomePage() {
   const donutOper: DonutCardItem[] = data ? buildDonutOperEstados(data) : [];
   const diverging: DivergingBarCardItem[] = data ? buildDivergingOperTendencia(data) : [];
   const barOper: BarCardItem[] = data ? buildBarOperValorPorDia(data) : [];
-  // Heatmap de ejemplo (sample). Si prefieres el real, descomenta la línea de abajo.
-  // const { data: heatData, xDomain, yDomain } = data ? mapHeatmapVinculaciones(data) : { data: [], xDomain: [], yDomain: [] };
-  // Por ahora, heatmapSample está indefinido o mal declarado, así que lo eliminamos.
+  const heat = data ? buildHeatmapVinculaciones(data) : null;
+
 
   return (
     <>
@@ -263,9 +185,9 @@ export default function HomePage() {
           {/* DER: inferior -> Heatmap (lo dejas como lo tenías) */}
           <div className="h-full">
             <HeatmapHero
-              data={heatmapSample}
-              xDomain={xDom as any}
-              yDomain={yDom as any}
+              data={heat?.data ?? []}
+              xDomain={heat?.xDomain as any}
+              yDomain={heat?.yDomain as any}
               a11yTitle="Tiempos por Transición (Horas)"
               tooltip={(d) => (
                 <div className="text-tiny">

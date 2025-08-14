@@ -5,8 +5,8 @@ import {
   Card, CardBody, CardHeader, Chip, Skeleton, Tabs, Tab, Divider
 } from "@heroui/react";
 import { useMediaQuery } from "usehooks-ts";
-import RegistroCard from "@/app/vinculaciones/[id]/RegistroCard";
-import AutorizacionBuroCard from "@/app/vinculaciones/[id]/AutorizacionBuroCard";
+import RegistroCard from "@/app/vinculaciones/[rfc]/[id]/RegistroCard";
+import AutorizacionBuroCard from "@/app/vinculaciones/[rfc]/[id]/AutorizacionBuroCard";
 
 type Resp = {
   detalleOperacion: {
@@ -56,12 +56,12 @@ export default function DetalleOperacionPage({ params }: { params: { id: string 
   }, [params.id]);
 
   const tabs = [
-    { key: "buro", title: "Autorización Buró", content: <AutorizacionBuroCard id={params.id} /> },
+    { key: "buro", title: "Autorización Buró", content: <div></div> },
   ] as const;
 
   return (
     <div className="space-y-6 mt-4">
-      <RegistroCard id={params.id} expandAll={expandAll} onToggleExpandAll={() => setExpandAll(v => !v)} />
+      <RegistroCard expandAll={expandAll} onToggleExpandAll={() => setExpandAll(v => !v)} />
       {(!expandAll && !isMobile) ? (
         <Tabs
           aria-label="Detalle operación"

@@ -72,7 +72,7 @@ function VinculacionesTable() {
     };
   }, []);
 
-  const handleVerDetalle = (item: Row) => router.push(`/vinculaciones/${item.id}`);
+  const handleVerDetalle = (item: Row) => router.push(`/vinculaciones/${item.rfc}/${item.id}`);
 
   const cellRenderers: Record<string, (item: any) => React.ReactNode> = {
     estado: (item: Row) => <EstadoDots estado={item.estadoRaw} />,

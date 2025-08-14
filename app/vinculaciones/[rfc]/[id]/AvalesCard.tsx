@@ -6,9 +6,9 @@ import {
     Modal, ModalContent, ModalBody, ModalHeader, ModalFooter, Divider, Tooltip
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { getDetalleVinculacion } from "@/lib/api/getDetalleVinculacion";
+import { useVinculacion } from "@/contexts/VinculacionProvider";
 
-// ===== Tipos (ajusta si tu JSON difiere) =====
+// ===== Tipos (solo locales para pintar la UI) =====
 type Aval = {
     id: string | number;
     nombreCompleto?: string;
@@ -25,14 +25,10 @@ type Aval = {
     fechaFirma?: string | null;
     patrimonioLiquido?: number | null;
     detalleBuro?: string | null;
-
-    // estados
     ejecutadoBuro?: boolean | null;
     estadoBuro?: number | null;     // 1 aceptado / -1 rechazado / 0|null pendiente
     firmaDocumento?: number | null; // 1 firmado
 };
-
-type Resp = Awaited<ReturnType<typeof getDetalleVinculacion>>;
 
 // ===== Helpers UI =====
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
@@ -53,8 +49,7 @@ const fmtMoney = (n?: number | null) =>
         ? new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 2 }).format(n)
         : "—";
 
-const unformatMoney = (s: string) =>
-    Number(s.replace(/[^\d.-]/g, "")) || 0;
+const unformatMoney = (s: string) => Number(s.replace(/[^\d.-]/g, "")) || 0;
 
 const chipBuro = (v?: number | null) =>
     v === 1 ? <Chip size="sm" color="success" variant="flat">Aceptado</Chip>
@@ -69,10 +64,41 @@ const chipEjecucion = (ok?: boolean | null) =>
     ok ? <Chip size="sm" color="success" variant="flat">Completado</Chip>
         : <Chip size="sm" color="warning" variant="flat">Pendiente</Chip>;
 
+// ===== Mapper desde el detalle del provider -> Aval[] =====
+function mapAvalistas(source: any[] = []): Aval[] {
+    return source.map((a: any, i: number) => ({
+        id: a.id ?? a.avalId ?? i,
+        nombreCompleto:
+            a.nombreCompleto ??
+            [a.nombres, a.apellidoPaterno, a.apellidoMaterno].filter(Boolean).join(" "),
+        rfc: a.rfc,
+        numeroExterior: a.numeroExterior,
+        numeroInterior: a.numeroInterior,
+        municipio: a.municipio,
+        ciudad: a.ciudad,
+        codigoPostal: a.codigoPostal,
+        estado: a.estado,
+        colonia: a.colonia,
+        calle: a.calle,
+        envioFirmaAutorizacion: a.email ?? a.envioFirmaAutorizacion,
+        fechaFirma: a.fechaFirma,
+        patrimonioLiquido: a.patrimonioLiquido ?? a.patrimonio_liquido,
+        detalleBuro: a.detalleBuro,
+        ejecutadoBuro: a.executedBuro ?? a.ejecutadoBuro,
+        estadoBuro: a.buroState ?? a.estadoBuro,
+        firmaDocumento: a.firmaDocumento ?? a.autorizacionBuro?.state,
+    }));
+}
+
 // ===== Componente principal =====
-export default function AvalesCard({ id }: { id: string }) {
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState<string | null>(null);
+export default function AvalesCard() {
+    const ctx = useVinculacion();
+
+    // ⬇️ Ajusta estos nombres si tu provider expone otros
+    const detalle = ctx.detalle;
+    const loading = (ctx as any).loadingDetalle ?? ctx.loading ?? false;
+    const error = (ctx as any).errorDetalle ?? ctx.error ?? null;
+
     const [avales, setAvales] = React.useState<Aval[]>([]);
 
     // Modal state
@@ -80,47 +106,11 @@ export default function AvalesCard({ id }: { id: string }) {
     const [editing, setEditing] = React.useState<Aval | null>(null);
     const [moneyStr, setMoneyStr] = React.useState("");
 
+    // Derivar avales desde el provider cuando llegue/actualice el detalle
     React.useEffect(() => {
-        let on = true;
-        (async () => {
-            try {
-                setLoading(true);
-                const json: Resp = await getDetalleVinculacion(id);
-                const source: any[] = (json as any)?.detalleVinculacion?.datosAvalistas ?? [];
-
-                const mapped: Aval[] = source.map((a: any, i: number) => ({
-                    id: a.id ?? a.avalId ?? i,
-                    nombreCompleto:
-                        a.nombreCompleto ??
-                        [a.nombres, a.apellidoPaterno, a.apellidoMaterno].filter(Boolean).join(" "),
-                    rfc: a.rfc,
-                    numeroExterior: a.numeroExterior,
-                    numeroInterior: a.numeroInterior,
-                    municipio: a.municipio,
-                    ciudad: a.ciudad,
-                    codigoPostal: a.codigoPostal,
-                    estado: a.estado,
-                    colonia: a.colonia,
-                    calle: a.calle,
-                    envioFirmaAutorizacion: a.email ?? a.envioFirmaAutorizacion,
-                    fechaFirma: a.fechaFirma,
-                    patrimonioLiquido: a.patrimonioLiquido ?? a.patrimonio_liquido,
-                    detalleBuro: a.detalleBuro,
-
-                    ejecutadoBuro: a.executedBuro ?? a.ejecutadoBuro,
-                    estadoBuro: a.buroState ?? a.estadoBuro,
-                    firmaDocumento: a.firmaDocumento ?? a.autorizacionBuro?.state,
-                }));
-
-                if (on) setAvales(mapped);
-            } catch (e: any) {
-                setError(e?.message ?? "Error");
-            } finally {
-                if (on) setLoading(false);
-            }
-        })();
-        return () => { on = false; };
-    }, [id]);
+        const src = (detalle as any)?.detalleVinculacion?.datosAvalistas ?? (detalle as any)?.datosAvalistas ?? [];
+        setAvales(mapAvalistas(src));
+    }, [detalle]);
 
     const openEdit = (aval: Aval) => {
         setEditing(aval);
@@ -131,13 +121,16 @@ export default function AvalesCard({ id }: { id: string }) {
     const saveEdit = () => {
         if (!editing) return;
         const val = unformatMoney(moneyStr);
+        // 1) Optimista en UI
         setAvales(prev => prev.map(a => a.id === editing.id ? { ...a, patrimonioLiquido: val } : a));
         setOpen(false);
 
-        // TODO: llamada a API real (PATCH/PUT) aquí
-        // await api.updatePatrimonio(editing.id, val)
+        // 2) TODO: persistir en backend y luego refrescar:
+        // await api.updatePatrimonio({ id: editing.id, valor: val })
+        // await ctx.reloadDetalle()  // si tu provider expone este helper
     };
 
+    // ===== Estados de carga/errores =====
     if (loading) {
         return (
             <Card shadow="sm">
@@ -161,7 +154,7 @@ export default function AvalesCard({ id }: { id: string }) {
     }
 
     if (error) {
-        return <Card shadow="sm"><CardBody className="text-danger">Error: {error}</CardBody></Card>;
+        return <Card shadow="sm"><CardBody className="text-danger">Error: {String(error)}</CardBody></Card>;
     }
 
     if (!avales.length) {
@@ -176,14 +169,12 @@ export default function AvalesCard({ id }: { id: string }) {
                         <CardHeader className="flex items-center justify-between gap-4">
                             <div className="flex items-center gap-2">
                                 <Icon icon="solar:user-id-linear" className="text-xl" />
-                                <div className="font-semibold">
-                                    Aval: {a.nombreCompleto ?? "—"}
-                                </div>
+                                <div className="font-semibold">Aval: {a.nombreCompleto ?? "—"}</div>
                             </div>
                         </CardHeader>
                         <Divider className="my-2" />
                         <CardBody className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {/* Col 1 (como tu captura) */}
+                            {/* Col 1 */}
                             <Field label="RFC">{a.rfc ?? "—"}</Field>
                             <Field label="Número exterior">{a.numeroExterior ?? "—"}</Field>
                             <Field label="Municipio">{a.municipio ?? "—"}</Field>
@@ -196,24 +187,15 @@ export default function AvalesCard({ id }: { id: string }) {
                             <Field label="Ciudad">{a.ciudad ?? "—"}</Field>
                             <Field label="Fecha en que se firma">{fmtDate(a.fechaFirma)}</Field>
                             <div className="flex items-center gap-2">
-                                <Field label="Patrimonio líquido">
-                                    {fmtMoney(a.patrimonioLiquido)}
-                                </Field>
+                                <Field label="Patrimonio líquido">{fmtMoney(a.patrimonioLiquido)}</Field>
                                 <Tooltip content="Editar patrimonio">
-                                    <Button
-                                        isIconOnly
-                                        size="sm"
-                                        variant="light"
-                                        onPress={() => openEdit(a)}
-                                    >
+                                    <Button isIconOnly size="sm" variant="light" onPress={() => openEdit(a)}>
                                         <Icon icon="solar:pen-linear" className="text-base" />
                                     </Button>
                                 </Tooltip>
                             </div>
                             <Field label="Detalle Buró">
-                                <span className="truncate inline-block max-w-[18rem]">
-                                    {a.detalleBuro?.trim() || "—"}
-                                </span>
+                                <span className="truncate inline-block max-w-[18rem]">{a.detalleBuro?.trim() || "—"}</span>
                             </Field>
 
                             {/* Col 3 */}
@@ -235,9 +217,7 @@ export default function AvalesCard({ id }: { id: string }) {
                         <CardHeader className="px-6 pt-6 pb-2">
                             <div className="flex flex-col items-start">
                                 <h4 className="text-large">Editar patrimonio líquido</h4>
-                                <p className="text-small text-default-500">
-                                    {editing?.nombreCompleto ?? "—"}
-                                </p>
+                                <p className="text-small text-default-500">{editing?.nombreCompleto ?? "—"}</p>
                             </div>
                         </CardHeader>
                         <Divider />
@@ -249,10 +229,7 @@ export default function AvalesCard({ id }: { id: string }) {
                                     value={moneyStr}
                                     inputMode="numeric"
                                     startContent={<span className="text-default-500">$</span>}
-                                    onValueChange={(v) => {
-                                        // permite escribir libre y formatear al blur
-                                        setMoneyStr(v);
-                                    }}
+                                    onValueChange={setMoneyStr}
                                     onBlur={() => {
                                         const n = unformatMoney(moneyStr);
                                         setMoneyStr(n ? fmtMoney(n) : "");

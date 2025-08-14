@@ -340,7 +340,7 @@ export const CircleChartCard = React.forwardRef<HTMLDivElement, CircleChartCardP
                     </ResponsiveContainer>
 
                     {showLegend && (
-                        <div className="text-tiny text-default-500 flex w-full flex-col items-start gap-4 p-4 lg:p-0 text-left">
+                        <div className="text-tiny text-default-500 flex w-full flex-col items-start gap-4 p-4 lg:p-0 text-left mr-5">
                             {categories.map((category, index) => (
                                 <div key={index} className="flex items-center gap-2">
                                     <span

@@ -15,6 +15,7 @@ import {
     cn,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import { formatCurrency } from "@/lib/helpers/CurrencyFormatter";
 
 // =====================
 // Types
@@ -75,23 +76,6 @@ const DEFAULT_MENU: NonNullable<BarGraphProps["menuItems"]> = [
     { key: "export-data", label: "Export Data" },
     { key: "set-alert", label: "Set Alert" },
 ];
-
-// =====================
-// Helpers (match original visuals)
-// =====================
-const formatWeekday = (weekday: string) => {
-    const day =
-        {
-            Mon: 1,
-            Tue: 2,
-            Wed: 3,
-            Thu: 4,
-            Fri: 5,
-            Sat: 6,
-            Sun: 0,
-        }[weekday] ?? 0;
-    return new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(2024, 0, day));
-};
 
 // =====================
 // Main grid component
@@ -271,13 +255,25 @@ export const BarChartCard = React.forwardRef<HTMLDivElement, BarChartCardProps>(
                             axisLine={false}
                             style={{ fontSize: "var(--heroui-font-size-tiny)" }}
                             tickLine={false}
-                            tickFormatter={(value: any, _index: number) => String(yTickFormatter ? yTickFormatter(value) : value)}
+                            tickFormatter={(value: any, _index: number) => {
+                                // Si se provee un formateador externo, úsalo
+                                if (yTickFormatter) return String(yTickFormatter(value));
+                                if (typeof value === "number") {
+                                    if (value >= 1_000_000) {
+                                        return `${(value / 1_000_000).toFixed(value % 1_000_000 === 0 ? 0 : 1)}M`;
+                                    }
+                                    if (value >= 1_000) {
+                                        return `${(value / 1_000).toFixed(value % 1_000 === 0 ? 0 : 1)}k`;
+                                    }
+                                }
+                                return String(value);
+                            }}
                         />
                         <Tooltip
                             content={({ label, payload }) => (
                                 <div className="rounded-medium bg-background text-tiny shadow-small flex h-auto min-w-[120px] items-center gap-x-2 p-2">
                                     <div className="flex w-full flex-col gap-y-1">
-                                        <span className="text-foreground font-medium">{formatWeekday(String(label))}</span>
+                                        <span className="text-foreground font-medium">{(String(label))}</span>
                                         {payload?.map((p: any, index: number) => {
                                             const name = String(p.name ?? "");
                                             const value = p.value as number;
@@ -290,7 +286,7 @@ export const BarChartCard = React.forwardRef<HTMLDivElement, BarChartCardProps>(
                                                     />
                                                     <div className="text-default-700 flex w-full items-center justify-between gap-x-2 pr-1 text-xs">
                                                         <span className="text-default-500">{category}</span>
-                                                        <span className="text-default-700 font-mono font-medium">{value}</span>
+                                                        <span className="text-default-700 font-mono font-medium">{formatCurrency(value)}</span>
                                                     </div>
                                                 </div>
                                             );
@@ -305,11 +301,11 @@ export const BarChartCard = React.forwardRef<HTMLDivElement, BarChartCardProps>(
                                 key={`${category}-${index}`}
                                 animationDuration={450}
                                 animationEasing="ease"
-                                barSize={barSize}
+                                barSize={24}
                                 dataKey={category}
                                 fill={`hsl(var(--heroui-${color}-${(index + 1) * 200}))`}
                                 radius={index === categories.length - 1 ? [4, 4, 0, 0] : 0}
-                                stackId={stacked ? "bars" : undefined}
+                                stackId="bars"
                             />
                         ))}
                     </RBarChart>

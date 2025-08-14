@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { Card, CardBody, CardHeader, Skeleton, Chip } from "@heroui/react";
+import { Card, CardBody, CardHeader, Skeleton } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import GraphDual, { GraphDualItem, ChartDataPoint } from "@/components/Graphs/DualGraph";
-import { getCashflow, CashflowRow } from "@/lib/api/getCashflow";
+import { getCashflow, CashflowRow } from "@/lib/api/getCashflow"; // ← fallback temporal
+import { useVinculacion } from "@/contexts/VinculacionProvider";
 
 const M = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
 const mabbr = (n: number) => M[Math.max(1, Math.min(12, n)) - 1];
@@ -15,13 +16,13 @@ function buildCombined(rows: CashflowRow[]): GraphDualItem[] {
 
     const data: ChartDataPoint[] = last12.map(r => ({
         month: mabbr(r.month),
-        value: r.in,            // Ingresos -> línea/área principal
-        lastYearValue: r.out,   // Egresos -> línea de comparación (roja)
+        value: r.in,          // Ingresos -> serie principal
+        lastYearValue: r.out, // Egresos -> serie de comparación
     }));
 
     const lastIn = data.at(-1)?.value ?? 0;
     const prevIn = data.at(-2)?.value ?? 0;
-    const changeP = prevIn ? (((lastIn - prevIn) / Math.abs(prevIn)) * 100) : 0;
+    const changeP = prevIn ? ((lastIn - prevIn) / Math.abs(prevIn)) * 100 : 0;
 
     return [{
         key: "cashflow",
@@ -35,22 +36,32 @@ function buildCombined(rows: CashflowRow[]): GraphDualItem[] {
     }];
 }
 
-export default function CashflowCard({ id }: { id: string }) {
+export default function CashflowCard() {
+    const ctx = useVinculacion(); // ← id + rfc + endpoints + (opcional) caché interna
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState<string | null>(null);
     const [items, setItems] = React.useState<GraphDualItem[]>([]);
 
     React.useEffect(() => {
-        let on = true; (async () => {
+        let on = true;
+        (async () => {
             try {
                 setLoading(true);
-                const rows = await getCashflow(id);
+
+                // Usamos el id desde el provider
+                const rows = await getCashflow(ctx.key.id);
                 if (!on) return;
+
                 setItems(buildCombined(rows));
-            } catch (e: any) { setError(e?.message ?? "Error"); }
-            finally { on && setLoading(false); }
-        })(); return () => { on = false; };
-    }, [id]);
+            } catch (e: any) {
+                if (!on) return;
+                setError(e?.message ?? "Error");
+            } finally {
+                on && setLoading(false);
+            }
+        })();
+        return () => { on = false; };
+    }, [ctx?.key.id, ctx?.key.rfc]);
 
     if (loading) {
         return (
@@ -68,40 +79,38 @@ export default function CashflowCard({ id }: { id: string }) {
             </Card>
         );
     }
+
     if (error || !items.length) {
         return <Card shadow="sm"><CardBody className="text-danger">{error ?? "Sin datos"}</CardBody></Card>;
     }
 
     return (
-        <div className="space-y-2 py-3 ">
-            {/* Leyenda simple */}
-
+        <div className="space-y-2 py-3">
             <GraphDual
                 title="CashFlow (últimos 12 meses)"
-                items={items}                 // un solo item -> no muestra tarjetas de Ingresos/Egresos
-                tabs={[]}                     // sin tabs de periodo
-                showComparison                // muestra la 2da serie (egresos)
+                items={items}
+                tabs={[]}
+                showComparison
                 colors={{
-                    positive: "success",        // color de la serie principal (Ingresos)
+                    positive: "success",   // Ingresos
                     negative: "success",
                     neutral: "default",
-                    comparison: "danger",       // color de la comparación (Egresos)
+                    comparison: "danger",  // Egresos
                 }}
-                menuItems={[]}                // evita menú (quedará sin opciones; si quieres, podemos ocultar el botón con CSS)
+                menuItems={[]}
                 initialActiveKey="cashflow"
                 visibleCards={false}
                 customCard={
-                    <>
-                        <div className="flex items-center gap-4 px-1">
-                            <div className="flex items-center gap-2">
-                                <span className="h-2 w-6 rounded-full" style={{ background: "hsl(var(--heroui-success))" }} />
-                                <span className="text-small text-foreground-500">Ingresos</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="h-2 w-6 rounded-full" style={{ background: "hsl(var(--heroui-danger))" }} />
-                                <span className="text-small text-foreground-500">Egresos</span>
-                            </div>
-                        </div></>
+                    <div className="flex items-center gap-4 px-1">
+                        <div className="flex items-center gap-2">
+                            <span className="h-2 w-6 rounded-full" style={{ background: "hsl(var(--heroui-success))" }} />
+                            <span className="text-small text-foreground-500">Ingresos</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="h-2 w-6 rounded-full" style={{ background: "hsl(var(--heroui-danger))" }} />
+                            <span className="text-small text-foreground-500">Egresos</span>
+                        </div>
+                    </div>
                 }
             />
         </div>

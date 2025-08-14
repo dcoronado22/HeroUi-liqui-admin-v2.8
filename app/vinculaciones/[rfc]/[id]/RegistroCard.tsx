@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-import { Card, CardBody, CardHeader, Chip, Progress, Skeleton, Button } from "@heroui/react";
+import { Card, CardBody, CardHeader, Chip, Progress, Skeleton, Button, Divider } from "@heroui/react";
 import { Icon } from "@iconify/react";
-import { getDetalleVinculacion } from "@/lib/api/getDetalleVinculacion";
-
-type Resp = Awaited<ReturnType<typeof getDetalleVinculacion>>;
+import { useVinculacion } from "@/contexts/VinculacionProvider";
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div className="min-w-0">
@@ -14,44 +12,43 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
     </div>
 );
 
+// opcional por si quieres mostrar “score” (0..10)
 const Segmented10 = ({ value }: { value: number }) => {
     const v = Math.max(0, Math.min(10, value));
-    return (
-        <Progress
-            aria-label="Progreso"
-            value={v}
-            maxValue={10}
-            size="sm"
-            radius="full"
-            className="w-full"
-        />
-    );
+    return <Progress aria-label="Progreso" value={v} maxValue={10} size="sm" radius="full" className="w-full" />;
 };
 
 const tipoContribLabel = (t?: 0 | 1) => (t === 0 ? "Persona moral" : t === 1 ? "Persona física" : "—");
 
-export default function RegistroCard({ id, expandAll, onToggleExpandAll }: { id: string; expandAll: boolean; onToggleExpandAll: () => void }) {
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState<string | null>(null);
-    const [data, setData] = React.useState<Resp | null>(null);
+function estadoChip(
+    state?: number | null,
+    desc?: string | null
+) {
+    const label = (desc?.trim()?.length ? desc : undefined) ??
+        (state === 10 ? "Vinculado" :
+            state === 0 ? "Pendiente" :
+                state === -1 ? "Rechazado" : "Estado");
 
-    React.useEffect(() => {
-        let on = true;
-        (async () => {
-            try {
-                setLoading(true);
-                const json = await getDetalleVinculacion(id);
-                if (on) setData(json);
-            } catch (e: any) {
-                setError(e?.message ?? "Error");
-            } finally {
-                if (on) setLoading(false);
-            }
-        })();
-        return () => { on = false; };
-    }, [id]);
+    const color: "success" | "warning" | "danger" | "default" =
+        state === 10 ? "success" :
+            state === 0 ? "warning" :
+                state === -1 ? "danger" : "default";
 
-    if (loading) {
+    return <Chip size="sm" variant="flat" color={color}>{label}</Chip>;
+}
+
+export default function RegistroCard({
+    expandAll,
+    onToggleExpandAll,
+}: {
+    expandAll: boolean;
+    onToggleExpandAll: () => void;
+}) {
+    const ctx = useVinculacion();
+    const detalle = ctx.detalle;
+
+    // Loading inicial mientras el Provider trae el detalle
+    if (!detalle) {
         return (
             <Card shadow="sm">
                 <CardHeader className="flex items-center gap-4">
@@ -73,24 +70,27 @@ export default function RegistroCard({ id, expandAll, onToggleExpandAll }: { id:
         );
     }
 
-    if (error || !data) {
-        return <Card shadow="sm"><CardBody className="text-danger">Error: {error ?? "Sin datos"}</CardBody></Card>;
-    }
+    const reg = detalle.datosRegistroVinculacion ?? {};
+    const rep =
+        [reg.nombresRepLegal, reg.apellidoPaternoRepLegal, reg.apellidoMaternoRepLegal]
+            .filter(Boolean)
+            .join(" ") || "—";
 
-    const det = data.detalleVinculacion;
-    const reg = det.datosRegistroVinculacion;
-    const score = reg.state ?? det.state ?? 0;
-    const rep = [reg.nombresRepLegal, reg.apellidoPaternoRepLegal, reg.apellidoMaternoRepLegal]
-        .filter(Boolean).join(" ") || "—";
+    const rfc = reg.rfc || ctx.key.rfc || "—";
+    const score = reg.state ?? detalle.state ?? 0; // por si quieres usar <Segmented10 value={...} />
 
     return (
-        <Card shadow="sm" className="text-left px-3 m-3 dark:border-default-100 border border-default-50 shadow-xl shadow-black/10 dark:shadow-black/40">
+        <Card
+            shadow="sm"
+            className="text-left px-3 m-3 dark:border-default-100 border border-default-50 shadow-xl shadow-black/10 dark:shadow-black/40"
+        >
             <CardHeader className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2 shrink-0">
                     <Icon icon="solar:document-line-duotone" className="text-xl" />
-                    <div className="font-semibold">Detalle Vinculacion</div>
-                    <Chip size="sm" variant="flat" color="success">Vinculado</Chip>
+                    <div className="font-semibold">Detalle de vinculación</div>
+                    {estadoChip(detalle.state, (detalle as any)?.stateDescription)}
                 </div>
+
                 <div className="flex items-center gap-3 shrink-0">
                     <Button
                         size="sm"
@@ -104,19 +104,28 @@ export default function RegistroCard({ id, expandAll, onToggleExpandAll }: { id:
                 </div>
             </CardHeader>
 
-            <CardBody className="space-y-6 ">
+            <Divider className="my-2" />
+
+            <CardBody className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
-                    <Field label="Razón social">{reg.razonSocial}</Field>
-                    <Field label="RFC">{reg.rfc}
+                    <Field label="Razón social">{reg.razonSocial ?? "—"}</Field>
+
+                    <Field label="RFC">
+                        {rfc}
                         <Chip color="primary" className="ml-2" size="sm" variant="flat">
                             {tipoContribLabel(reg.TipoContribuyente)}
                         </Chip>
                     </Field>
+
                     <Field label="Representante legal">{rep}</Field>
-                    <Field label="Teléfono">{reg.telefono}</Field>
-                    <Field label="Whatsapp">{reg.whatsapp}</Field>
-                    <Field label="Email">{reg.email}</Field>
+
+                    <Field label="Teléfono">{reg.telefono ?? "—"}</Field>
+                    <Field label="Whatsapp">{reg.whatsapp ?? "—"}</Field>
+                    <Field label="Email">{reg.email ?? "—"}</Field>
                 </div>
+
+                {/* Si quisieras mostrar un “score” de 0..10 */}
+                {/* <Segmented10 value={Number(score) || 0} /> */}
             </CardBody>
         </Card>
     );

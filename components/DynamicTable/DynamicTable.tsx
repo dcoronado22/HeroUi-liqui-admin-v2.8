@@ -27,8 +27,8 @@ import {
   Radio,
   Select,
   SelectItem,
-  spinner,
-  Spinner
+  Spinner,
+  type ButtonProps,
 } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { SearchIcon } from "@heroui/shared-icons";
@@ -41,6 +41,16 @@ interface ColumnDefinition {
   label: string;
   allowsSorting?: boolean;
   cellRenderer?: CellRenderFunction;
+}
+
+export interface TableActionButton {
+  label: string;
+  onClick: () => void;
+  icon?: string;
+  color?: ButtonProps["color"];
+  variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
+  isDisabled?: boolean;
 }
 
 interface DynamicTableProps {
@@ -58,6 +68,8 @@ interface DynamicTableProps {
   minHeight?: string;
   isLoading?: boolean;
   loadingLabel?: string;
+  actionButton?: TableActionButton;
+  extraTopRight?: React.ReactNode;
 }
 
 export const DynamicTable: React.FC<DynamicTableProps> = ({
@@ -74,7 +86,9 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   maxHeight = "65vh",
   minHeight = "65vh",
   isLoading = false,
-  loadingLabel = "Cargando..."
+  loadingLabel = "Cargando...",
+  actionButton,
+  extraTopRight,
 }) => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(initialVisibleColumns));
@@ -186,22 +200,24 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
 
   const topContent = useMemo(() => {
     return (
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between gap-4 w-full">
-          {/* Izquierda: Filtros, columnas, orden y seleccionados */}
-          <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-3">
+        {/* grid 1fr | auto para que la parte derecha no empuje a la izquierda */}
+        <div className="grid items-center gap-3 md:grid-cols-[1fr_auto]">
+          {/* IZQUIERDA: busca + acciones, con wrap */}
+          <div className="min-w-0 flex flex-wrap items-center gap-2 mx-0.5">
             {allowFiltering && (
               <Input
                 isClearable
                 variant="bordered"
-                className="w-full sm:max-w-[40%]"
                 placeholder="Buscar por..."
                 startContent={<SearchIcon />}
                 value={filterValue}
                 onClear={() => onSearchChange("")}
                 onValueChange={onSearchChange}
+                className="flex-1  max-w-50"
               />
             )}
+
             {allowColumnVisibility && (
               <Dropdown>
                 <DropdownTrigger>
@@ -225,6 +241,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                 </DropdownMenu>
               </Dropdown>
             )}
+
             {allowFiltering && (
               <Popover placement="bottom-end">
                 <PopoverTrigger>
@@ -248,6 +265,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                 </PopoverContent>
               </Popover>
             )}
+
             {allowSorting && (
               <Dropdown>
                 <DropdownTrigger>
@@ -259,31 +277,48 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                   aria-label="Opciones de orden"
                   onAction={(key) => setSortDescriptor({ column: key as string, direction: "ascending" })}
                 >
-                  {columns.filter(col => col.allowsSorting).map((column) => (
-                    <DropdownItem key={column.key} className="capitalize">
-                      {column.label}
-                    </DropdownItem>
-                  ))}
+                  {columns
+                    .filter((col) => col.allowsSorting)
+                    .map((column) => (
+                      <DropdownItem key={column.key} className="capitalize">
+                        {column.label}
+                      </DropdownItem>
+                    ))}
                 </DropdownMenu>
               </Dropdown>
             )}
+
             {allowRowSelection && (
-              <div className="flex items-center h-full">
-                <label color="primary" className="flex items-center h-full text-default-400 text-small">
+              <div className="hidden md:flex items-center h-full">
+                <span className="text-default-400 text-small">
                   | {selectedKeys === "all"
-                    ? `Todos ${filteredItems.length} Seleccionados`
-                    : `${selectedKeys.size} Seleccionados`}
-                </label>
+                    ? `Todos ${filteredItems.length} seleccionados`
+                    : `${(selectedKeys as Set<string>).size ?? 0} seleccionados`}
+                </span>
               </div>
             )}
-            {/* Derecha: Filas por página */}
           </div>
-          <div className="flex items-center">
+
+          {/* DERECHA: botón de acción + select, fijos y sin wrap */}
+          <div className="flex items-center justify-end gap-2 shrink-0 whitespace-nowrap">
+            {actionButton && (
+              <Button
+                color={actionButton.color ?? "primary"}
+                variant={actionButton.variant ?? "solid"}
+                size={actionButton.size ?? "md"}
+                isDisabled={actionButton.isDisabled}
+                startContent={actionButton.icon ? <Icon icon={actionButton.icon} /> : undefined}
+                onPress={actionButton.onClick}
+              >
+                {actionButton.label}
+              </Button>
+            )}
+            {extraTopRight}
+
             <Select
-              labelPlacement="outside-left"
-              label="Filas por página"
+              aria-label="Filas por página"
               variant="faded"
-              className="min-w-50"
+              className="w-[120px]"
               defaultSelectedKeys={[rowsPerPage.toString()]}
               onChange={(e) => setRowsPerPage(Number(e.target.value))}
             >
@@ -296,17 +331,21 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
       </div>
     );
   }, [
-    filterValue,
-    visibleColumns,
-    onSearchChange,
-    columns,
     allowFiltering,
     allowColumnVisibility,
-    statusFilter,
-    roleFilter,
+    allowRowSelection,
     allowSorting,
-    selectedKeys,
+    columns,
+    filterValue,
     filteredItems.length,
+    onSearchChange,
+    roleFilter,
+    rowsPerPage,
+    selectedKeys,
+    statusFilter,
+    visibleColumns,
+    actionButton,
+    extraTopRight,
   ]);
 
   const bottomContent = useMemo(() => {

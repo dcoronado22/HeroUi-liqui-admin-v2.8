@@ -1,4 +1,13 @@
-export type DocItem = { id: string; label: string; url: string; ext: string | null };
+import axios from "axios";
+import { apiCall } from "./client";
+import { getFileExt } from "../helpers/file";
+
+export type DocItem = {
+  id: string;
+  label: string;
+  url: string;
+  ext: string | null;
+};
 
 function guessExtFromUrl(u?: string | null): string | null {
   if (!u) return null;
@@ -14,17 +23,34 @@ function guessExtFromUrl(u?: string | null): string | null {
   }
 }
 
-export async function getDocumentosDetalle(vinculacionId: string): Promise<DocItem[]> {
-  // Lee el mock desde /public (cámbialo por axios luego)
-  const res = await fetch("/mock/GetDocumentosDetalle.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("No se pudieron cargar los documentos");
-  const json = await res.json();
+export async function getDocumentosDetalle(arg: {
+  id: string;
+  rfc: string;
+}): Promise<DocItem[]> {
+  const payload = Array.isArray(arg) ? { id: arg[0], rfc: arg[1] } : arg;
 
-  const src: any[] = json?.documentos ?? [];
-  return src.map((x, i) => ({
-    id: String(x.id ?? i),
-    label: String(x.label ?? `Documento ${i + 1}`),
-    url: String(x.url ?? ""),
-    ext: guessExtFromUrl(x.url),
-  }));
-  }
+  const id = arg.id.trim();
+  const rfc = arg.rfc.trim().toUpperCase();
+
+  const qs = new URLSearchParams({ id, rfc }).toString();
+  const url = `/admin/Vinculacion/GetDocumentosDetalle?${qs}`;
+
+  const res = await apiCall(url, {
+    method: "POST",
+    body: { id, rfc },
+  });
+
+  const src: any[] = res?.documentos ?? [];
+  return src.map((x: any, i: number) => {
+    const label = String(x.label ?? `Documento ${i + 1}`);
+    const url = String(x.url ?? "");
+    // prioridad: ext por URL firmada; si no, por label
+    const ext = getFileExt(url) ?? getFileExt(label);
+    return {
+      id: String(x.id ?? i),
+      label,
+      url,
+      ext,
+    };
+  });
+}

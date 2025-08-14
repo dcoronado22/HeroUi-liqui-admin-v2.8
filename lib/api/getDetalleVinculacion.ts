@@ -1,4 +1,5 @@
-// lib/api/getDetalleVinculacion.ts
+import axios from "axios";
+import { apiCall } from "./client";
 
 // ===== Tipos =====
 export interface DatosRegistroVinculacion {
@@ -8,6 +9,8 @@ export interface DatosRegistroVinculacion {
   telefono?: string;
   whatsapp?: string;
   email?: string;
+  confirmaEmail?: string;
+  personaConActividadesEmpresariales?: boolean;
   nombresRepLegal?: string;
   apellidoPaternoRepLegal?: string;
   apellidoMaternoRepLegal?: string;
@@ -16,13 +19,20 @@ export interface DatosRegistroVinculacion {
 
 export interface EstadoFinanciero {
   estado?: string | number | null;
-  pasivoTotal?: number | null;
-  pasivoCapital?: number | null;
-  liquidezNecesaria?: number | null;
   activoCortoPlazo?: number | null;
-  capitalContable?: number | null;
   pasivoCortoPlazo?: number | null;
+  pasivoTotal?: number | null;
+  capitalContable?: number | null;
+
+  // Algunos backends exponen estos planos…
+  pasivoCapital?: number | null;
   razonCirculante?: number | null;
+
+  // …y/o dentro de un subobjeto 'razon'
+  razon?: {
+    circulante?: number | null;
+    pasivoCapital?: number | null;
+  } | null;
 }
 
 export interface Avalista {
@@ -44,8 +54,11 @@ export interface Avalista {
   fechaFirma?: string | null;
   patrimonioLiquido?: number | null;
   detalleBuro?: string | null;
-  executedBuro?: boolean | null;
-  buroState?: number | null;           // 1 aceptado / -1 rechazado / 0 pendiente
+
+  // variantes que hemos visto
+  executedBuro?: boolean | null;  // a veces viene así
+  ejecutadoBuro?: boolean | null; // o así
+  buroState?: number | null;           // 1 aceptado / 0 pendiente / -1 rechazado
   firmaDocumento?: number | null;      // 1 firmado
   autorizacionBuro?: { state?: number | null } | null;
 }
@@ -62,10 +75,13 @@ export interface DatosAutorizacionBuro {
   estado?: string | null;
   codigoPostal?: string | null;
   actividadPrincipal?: string | null;
+  fechaFirma?: string | null;          // "2025/08/14" (además de signedAt)
   TipoContribuyente?: 0 | 1 | null;
   buroState?: number | null;           // 1 aceptado / 0 pendiente / -1 rechazado
   executedBuro?: boolean | null;
   detalleBuro?: string | null;
+  foundSat?: boolean | null;
+  foundEntidadesBloqueadas?: boolean | null;
   folio?: string | null;
   autorizacionBuro?: {
     id?: string;
@@ -75,36 +91,88 @@ export interface DatosAutorizacionBuro {
   } | null;
 }
 
+export interface DatosExpedienteAzul {
+  folder_id?: number | null;      // p.ej. 334062
+  encrypted_id?: string | null;   // p.ej. "N2xQVGR2..."
+}
+
+export interface Cupos {
+  cupoGlobal?: number | null;
+}
+
 export interface DetalleVinculacion {
-  state?: number;                      // 0..10 (score general)
+  id?: string;
+  state?: number;                      // 0..10 (score/estado)
+  stateDescription?: string;
+  status?: number;
+  statusDescription?: string;
+  fechaCreacion?: string;
+  autorizacionSatws?: boolean | null;
+  liquidezNecesaria?: number | null;
+
   datosRegistroVinculacion: DatosRegistroVinculacion;
-  datosAvalistas?: Avalista[];         // “detalleVinculacion.datosAvalistas”
-  estadoFinanciero?: EstadoFinanciero; // “detalleVinculacion.estadoFinanciero”
+
+  // Puede venir duplicado arriba; aquí lo dejamos como opcional
+  datosAutorizacionBuro?: DatosAutorizacionBuro;
+
+  datosExpedienteAzul?: DatosExpedienteAzul;
+
+  datosAvalistas?: Avalista[] | null;
+
+  // Puede venir plano aquí o arriba en el response
+  estadoFinanciero?: EstadoFinanciero | null;
 }
 
 export interface DetalleVinculacionResponse {
   detalleVinculacion: DetalleVinculacion;
-  datosAutorizacionBuro?: DatosAutorizacionBuro; // según tu mock puede venir aquí
-  // ...otros campos del mock si existen
+
+  // Duplicados que el backend a veces expone en la raíz:
+  datosAutorizacionBuro?: DatosAutorizacionBuro;
+  estadoFinanciero?: EstadoFinanciero | null;
+
+  cupos?: Cupos;
+
+  // Campos meta
+  id?: null;
+  token?: null;
+  succeeded?: boolean;
+  reasonCode?: { value: number; description: string };
+  messages?: any[];
 }
 
-// ===== Fetcher (mock) =====
 export async function getDetalleVinculacion(
-  vinculacionId: string
+  arg: { id: string; rfc: string }
 ): Promise<DetalleVinculacionResponse> {
-  // MOCK desde /public; reemplaza por axios cuando tengas el endpoint real
-  const res = await fetch("/mock/GetDetalleVinculacionMock.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("No se pudo cargar DetalleVinculacion");
-  const json = await res.json();
-  return json as DetalleVinculacionResponse;
+  // Llamada con tu helper
+  const id = arg.id.trim();
+  const rfc = arg.rfc.trim().toUpperCase();
+
+  const qs = new URLSearchParams({ id, rfc }).toString();
+  const url = `/admin/Vinculacion/GetDetalleVinculacion?${qs}`;
+
+  const res = await apiCall(url, {
+    method: "POST",
+    body: { id, rfc },
+  });
+
+  // En algunos proyectos apiCall devuelve { data: ... }.
+  // En otros devuelve el JSON directamente. Hacemos un “unwrap” seguro.
+  const json = (res as any)?.detalleVinculacion ? (res as DetalleVinculacionResponse)
+            : (res as any)?.data ? ((res as any).data as DetalleVinculacionResponse)
+            : (res as DetalleVinculacionResponse);
+
+  if (!json?.detalleVinculacion) {
+    throw new Error("Respuesta inválida: falta detalleVinculacion");
+  }
+
+  // Normalización suave (rellenar duplicados de la raíz hacia adentro)
+  const dv = json.detalleVinculacion;
+  const merged: DetalleVinculacion = {
+    ...dv,
+    datosRegistroVinculacion: dv.datosRegistroVinculacion ?? ({} as DatosRegistroVinculacion),
+    datosAutorizacionBuro: dv.datosAutorizacionBuro ?? json.datosAutorizacionBuro,
+    estadoFinanciero: dv.estadoFinanciero ?? json.estadoFinanciero,
+  };
+
+  return { ...json, detalleVinculacion: merged };
 }
-
-/* Ejemplo de uso:
-import { getDetalleVinculacion } from "@/lib/api/getDetalleVinculacion";
-
-const data = await getDetalleVinculacion(id);
-const ef = data.detalleVinculacion.estadoFinanciero;
-const avales = data.detalleVinculacion.datosAvalistas;
-const registro = data.detalleVinculacion.datosRegistroVinculacion;
-const buro = data.datosAutorizacionBuro;
-*/

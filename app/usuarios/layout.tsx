@@ -1,4 +1,4 @@
-export default function HomeLayout({
+export default function UsuariosLayout({
   children,
 }: {
   children: React.ReactNode;

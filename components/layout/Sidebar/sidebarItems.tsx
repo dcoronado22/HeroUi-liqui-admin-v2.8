@@ -129,25 +129,25 @@ export const sectionItems: SidebarItem[] = [
     items: [
       {
         key: "usuarios",
-        href: "/Usuarios",
+        href: "/usuarios",
         icon: "solar:users-group-two-rounded-outline",
         title: "Usuarios",
       },
       {
         key: "roles",
-        href: "/Roles",
+        href: "/roles",
         icon: "solar:shield-check-outline",
         title: "Roles",
       },
       {
         key: "empresas",
-        href: "/Empresas",
+        href: "/empresas",
         icon: "solar:bill-list-outline",
         title: "Empresas",
       },
       {
         key: "alianzas",
-        href: "/Alianzas",
+        href: "/alianzas",
         icon: "solar:users-group-rounded-outline",
         title: "Alianzas",
       },
@@ -159,7 +159,7 @@ export const sectionItems: SidebarItem[] = [
     items: [
       {
         key: "listas_bloqueantes",
-        href: "/ListasBloqueantes",
+        href: "/listasBloqueantes",
         icon: "solar:user-block-outline",
         title: "Listas Bloqueantes",
       },
